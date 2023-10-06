@@ -1,0 +1,31 @@
+.text {
+    width: 160px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.btn-option {
+    display: flex;
+    align-items: center;
+    justify-content:space-evenly;
+    span{
+        cursor: pointer;
+
+    }
+   
+}
+.container {
+    table{
+      tbody{
+        &:nth-child(even){
+          background-color: white;
+        }
+        &:nth-child(odd){
+          background-color: #f5f5f5;
+        }
+    }
+   
+   }
+  }
+
+ 

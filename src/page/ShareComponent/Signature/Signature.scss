@@ -1,0 +1,43 @@
+
+.Signature-container{
+    display: flex;
+    flex-direction: column;
+    width: 305px;
+    justify-content: center;
+    align-items: center;
+    margin-left: 68%;
+    margin-top: 20px;
+    div{
+        &:nth-child(1){
+            display: flex;
+            font-style: italic;
+            justify-content: flex-end;
+            font-size: 18px;
+        }
+        &:nth-child(2){
+            display: flex;
+            font-weight: bold;
+            justify-content: flex-end;
+            font-size: 18px;
+            margin: 10px 0 1px 0;
+        }
+        &:nth-child(3){
+            display: flex;
+            justify-content: flex-end;
+            font-size: 18px;
+            font-style: italic;
+        }
+        &:nth-child(4){
+            //  width: 430px;
+             margin-top: 40px;
+             div{
+                &:nth-child(1){
+                    font-weight: bold;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
+    }
+}

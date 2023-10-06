@@ -1,0 +1,28 @@
+.height {
+    height: 59vh;
+    .btn{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        .item {
+            cursor: pointer;
+                 }
+                 .one{
+                    svg{
+                        color: #7467ef !important;
+                   }
+                }
+               .two{
+                    svg{
+                        color: red !important;
+                   }
+                }
+                .three{
+                    svg{
+                        color: #929292 !important;
+                   }
+        
+        }
+    }
+}

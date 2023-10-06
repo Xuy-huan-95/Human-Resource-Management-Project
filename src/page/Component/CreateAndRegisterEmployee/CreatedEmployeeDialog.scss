@@ -1,0 +1,49 @@
+.modal-create-container{
+    // min-width: 1000px;
+   .css-1gsv261{
+    height: 49px;
+   }
+   .MuiBox-root{
+    height: 100%;
+    .gird-all{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .gird-row{
+            display: flex;
+            justify-content: center;
+            .date{
+                margin-bottom: 5px;
+            }
+        }
+        .left{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            .icon-content{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                            svg{
+                    font-size: 300px;
+                    color: #bdbaba;
+                }
+           
+            }
+        }
+    }
+   
+   
+   }
+    .icon-exit{
+        color: #7467ef !important;
+        font-weight: 500;
+    }
+  
+}
+   
+.MuiButtonBase-root{
+    font-weight: 600;
+}

@@ -1,0 +1,24 @@
+input[type=date]:required:invalid::-webkit-datetime-edit {
+    color: transparent;
+    &:hover{
+        cursor: pointer;
+    }
+}
+input[type=date]:focus::-webkit-datetime-edit {
+    color: black !important;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+.btn-upload{
+    background: #7467ef !important;
+    color: white !important;
+}
+.Width{
+    width: 900px;
+}
+
+.icon-content{
+    margin-bottom: 20px;
+}

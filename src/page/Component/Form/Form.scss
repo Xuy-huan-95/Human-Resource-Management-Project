@@ -1,0 +1,51 @@
+    .MuiList-root{
+        .container-registration-Forms{
+          height: 100%;
+        .registration-Forms-item{
+            display: flex;
+            align-items: center;
+        }
+    }
+    
+}
+.MuiDialog-container{
+    .title-page{
+        display: flex;
+        justify-content: space-between;
+        span {
+            &:nth-child(2){
+                margin-right: 10%;
+                font-size: 20px;
+                font-weight: 700;
+                color: #3da420;
+                font-style: italic;
+            }
+        }
+    }
+    .sidebar {
+        position: fixed; 
+        .registration-Forms-item{
+            span{
+                font-size: 20px;
+            }
+        }
+    }
+    .Form-content{
+        margin-left: 220px;
+        overflow: auto;
+        
+      .wrapper{
+        margin: 20px 20px 20px 10px;
+      }
+        
+    }
+    .icon-exit{
+        color: #7467ef !important;
+        font-weight: 500;
+    }
+  
+}
+
+// .width {
+//     width: 1300px;
+// }
