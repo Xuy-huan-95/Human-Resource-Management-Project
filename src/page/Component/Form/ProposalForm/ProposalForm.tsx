@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hook";
 import "./ProposalForm.scss"
 import moment from "moment";
 import Signature from "../../../ShareComponent/Signature/Signature"
-import { NAME_TYPE, STATUS_PROFILE } from "../../../ShareComponent/Constants/StatusIfomation"
+import { NAME_TYPE, STATUS_All, STATUS_PROFILE } from "../../../ShareComponent/Constants/StatusIfomation"
 
 const Recomement = () => {
     const dataToSendLeader = useAppSelector((state) => state.registerUser.userInfomation)

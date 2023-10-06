@@ -4,7 +4,7 @@ export interface IProposal {
   proposalDate: string;
   content: string;
   note: string;
-  type: number;
+  type: string;
   detailedDescription: string;
   proposalStatus: string;
   acceptanceDate: string;
@@ -17,5 +17,5 @@ export interface IProposal {
 export interface IProposalRes {
   code: number;
   message: string;
-  data: IProposal;
+  data: IProposal[];
 }

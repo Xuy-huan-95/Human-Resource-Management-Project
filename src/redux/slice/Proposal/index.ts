@@ -15,7 +15,7 @@ export const ProposalAPI = createApi({
       providesTags(result) {
         if (result) {
           const final = [
-            ...result.data.map(({ id }) => ({
+            ...result?.data.map(({ id }) => ({
               type: "ProposalAPI" as const,
               id,
             })),
@@ -65,7 +65,7 @@ export const ProposalAPI = createApi({
       }),
       invalidatesTags: () => [{ type: "ProposalAPI", id: "ProposalAPILIST" }],
     }),
-    updateLeader: builder.mutation<IProposalRes, Omit<IProposal, "employeeId">>({
+    updateLeader: builder.mutation<any, Omit<IProposal, "employeeId">>({
       query(data) {
         return {
           url: `/proposal/${data.id}`,
