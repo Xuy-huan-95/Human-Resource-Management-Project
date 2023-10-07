@@ -13,7 +13,7 @@ const initialSate: IProposalIncreate = {
         proposalDate: "",
         content: "",
         note: "",
-        type: "",
+        type: 0,
         detailedDescription: "",
         proposalStatus: "",
         acceptanceDate: "",

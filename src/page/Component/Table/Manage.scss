@@ -166,5 +166,10 @@
 
 
 
-
+.btn_plus{
+    background:  #7467ef !important;
+    &:hover{
+        background: #e3e2e9;
+    }
+}
 

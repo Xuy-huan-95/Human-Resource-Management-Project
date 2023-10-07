@@ -117,6 +117,8 @@ const TableRelative = (props: ITableRelative) => {
                                                     {item.relationShip == STATUS_PROFILE.TWO && RELATIONSHIP.TWO}
                                                     {item.relationShip == STATUS_PROFILE.THREE && RELATIONSHIP.THREE}
                                                     {item.relationShip == STATUS_PROFILE.FOUR && RELATIONSHIP.FOUR}
+                                                    {item.relationShip == STATUS_PROFILE.FIVE && RELATIONSHIP.FIVE}
+
                                                 </TableCell>
                                                 <TableCell className='Action-btn'>
                                                     <ButtonEdit

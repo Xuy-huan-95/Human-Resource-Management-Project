@@ -22,7 +22,8 @@ const useStyles = makeStyles({
 const CertificateForm = () => {
     const classes = useStyles();
     const dataToSendLeader = useAppSelector((state) => state.registerUser.userInfomation)
-    const { data } = useGetCertificateByEmployeeIdQuery(dataToSendLeader.id)
+    const { data } = useGetCertificateByEmployeeIdQuery(dataToSendLeader.id, { refetchOnMountOrArgChange: true })
+
 
     return (
         <TableContainer className='Degreen-container'>
@@ -68,13 +69,13 @@ const CertificateForm = () => {
                             return (
                                 <TableBody key={`item-${index}`}>
                                     <TableRow hover role="checkbox" tabIndex={-1}>
-                                        <TableCell >
+                                        <TableCell align='center' >
                                             {item.id}
                                         </TableCell>
                                         <TableCell >
                                             {item.certificateName}
                                         </TableCell>
-                                        <TableCell >
+                                        <TableCell align='center' >
                                             {moment(item.issueDate).format("DD/MM/YYYY")}
                                         </TableCell>
                                         <TableCell >

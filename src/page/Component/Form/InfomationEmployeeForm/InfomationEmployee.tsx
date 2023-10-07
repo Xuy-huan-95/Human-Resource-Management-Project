@@ -30,7 +30,8 @@ const InfomationEmployee = (props: IInfomationEmployee) => {
     const [dataUpdateExperience, setDataupdateExperience] = useState<IExperience>(initStateExperience)
     const [idDeleteExperience, setIdDeleteExperience] = useState<number>(0)
     const [openDeleteExperience, setOpenDeleteExperience] = useState(false)
-    const { data } = useGetExperieceByemployeeIdQuery(dataToSendLeader.id)
+    const { data } = useGetExperieceByemployeeIdQuery(dataToSendLeader.id, { refetchOnMountOrArgChange: true })
+
     const handleShowhideModalDeleteExperience = (value: any) => {
         setOpenDeleteExperience(!openDeleteExperience)
         setIdDeleteExperience(value.id)
@@ -52,7 +53,7 @@ const InfomationEmployee = (props: IInfomationEmployee) => {
                     <div className='image'>
                         <Avatar
                             alt="Remy Sharp"
-                            src={dataToSendLeader?.image}
+                            src={dataUser?.image}
                             className='avata-cv'
                         />
                     </div>
@@ -62,7 +63,7 @@ const InfomationEmployee = (props: IInfomationEmployee) => {
                                 <EmailIcon />
                             </div>
                             <div>
-                                {dataToSendLeader?.email}
+                                {dataUser?.email}
                             </div>
                         </div>
                         <div className='phone'>
@@ -70,7 +71,7 @@ const InfomationEmployee = (props: IInfomationEmployee) => {
                                 <LocalPhoneIcon />
                             </div>
                             <div>
-                                {dataToSendLeader?.phone}
+                                {dataUser?.phone}
                             </div>
                         </div>
                     </div>
@@ -79,19 +80,19 @@ const InfomationEmployee = (props: IInfomationEmployee) => {
                             KỸ NĂNG
                         </div>
                         <div className='content'>
-                            {dataToSendLeader?.submitProfileStatus === STATUS_PROFILE.ONE || dataToSendLeader?.submitProfileStatus === STATUS_PROFILE.FOUR || dataToSendLeader?.submitProfileStatus === STATUS_PROFILE.FIVE ?
+                            {dataUser?.submitProfileStatus === STATUS_PROFILE.ONE || dataUser?.submitProfileStatus === STATUS_PROFILE.FOUR || dataUser?.submitProfileStatus === STATUS_PROFILE.FIVE ?
                                 <div className='content-item'>
                                     <Input
                                         label={"Vui lòng nhập Kỹ năng"}
                                         type={"text"}
-                                        value={dataToSendLeader?.skill}
-                                        FuntionOnchange={(event) => setDataUser({ ...dataToSendLeader, skill: event.target.value })}
+                                        value={dataUser?.skill}
+                                        FuntionOnchange={(event) => setDataUser({ ...dataUser, skill: event.target.value })}
                                     />
                                 </div>
                                 :
                                 <div className='content-item'>
-                                    {dataToSendLeader?.skill?.split("\n").filter((item) => item !== "") && dataToSendLeader?.skill?.split("\n").filter((item) => item !== "").length > 0 &&
-                                        dataToSendLeader?.skill?.split("\n").filter((item) => item !== "").map((item, index) => {
+                                    {dataUser?.skill?.split("\n").filter((item) => item !== "") && dataUser?.skill?.split("\n").filter((item) => item !== "").length > 0 &&
+                                        dataUser?.skill?.split("\n").filter((item) => item !== "").map((item, index) => {
                                             return (
                                                 <div className='container' key={`item-${index}`}>
                                                     <div className='icon'>
@@ -156,19 +157,19 @@ const InfomationEmployee = (props: IInfomationEmployee) => {
                             <div className="process-tittle">
                                 HOẠT ĐỘNG
                             </div>
-                            {dataToSendLeader?.submitProfileStatus === STATUS_PROFILE.ONE || dataToSendLeader?.submitProfileStatus === STATUS_PROFILE.FOUR || dataToSendLeader?.submitProfileStatus === STATUS_PROFILE.FIVE ?
+                            {dataUser?.submitProfileStatus === STATUS_PROFILE.ONE || dataUser?.submitProfileStatus === STATUS_PROFILE.FOUR || dataUser?.submitProfileStatus === STATUS_PROFILE.FIVE ?
 
                                 <div className='process-item'>
                                     <Input
                                         label={"Vui lòng nhập hoạt động"}
                                         type={"text"}
-                                        value={dataToSendLeader?.activity}
-                                        FuntionOnchange={(event) => setDataUser({ ...dataToSendLeader, activity: event.target.value })}
+                                        value={dataUser?.activity}
+                                        FuntionOnchange={(event) => setDataUser({ ...dataUser, activity: event.target.value })}
                                     />
                                 </div>
                                 :
                                 <div className='process-item'>
-                                    {dataToSendLeader?.activity?.split("\n").filter((item) => item !== "") && dataToSendLeader?.activity?.split("\n").filter((item) => item !== "").length > 0 &&
+                                    {dataUser?.activity?.split("\n").filter((item) => item !== "") && dataUser?.activity?.split("\n").filter((item) => item !== "").length > 0 &&
                                         dataUser?.activity?.split("\n").filter((item) => item !== "").map((item, index) => {
                                             return (
                                                 <div className='container' key={`item-${index}`}>
@@ -190,19 +191,19 @@ const InfomationEmployee = (props: IInfomationEmployee) => {
                             <div className='knowledge-title'>
                                 HIỂU BIẾT
                             </div>
-                            {dataToSendLeader?.submitProfileStatus === STATUS_PROFILE.ONE || dataToSendLeader?.submitProfileStatus === STATUS_PROFILE.FOUR || dataToSendLeader?.submitProfileStatus === STATUS_PROFILE.FIVE ?
+                            {dataUser?.submitProfileStatus === STATUS_PROFILE.ONE || dataUser?.submitProfileStatus === STATUS_PROFILE.FOUR || dataUser?.submitProfileStatus === STATUS_PROFILE.FIVE ?
                                 <div className='knowledge-content'>
                                     <Input
                                         label={"Vui lòng nhập hiểu biết"}
                                         type={"text"}
                                         value={dataToSendLeader?.knowledge}
-                                        FuntionOnchange={(event) => setDataUser({ ...dataToSendLeader, knowledge: event.target.value })}
+                                        FuntionOnchange={(event) => setDataUser({ ...dataUser, knowledge: event.target.value })}
                                     />
                                 </div>
                                 :
                                 <div className='knowledge-content'>
-                                    {dataToSendLeader?.knowledge?.split("\n").filter((item) => item !== "") && dataToSendLeader?.knowledge?.split("\n").filter((item) => item !== "").length > 0 &&
-                                        dataToSendLeader?.knowledge?.split("\n").filter((item) => item !== "").map((item, index) => {
+                                    {dataUser?.knowledge?.split("\n").filter((item) => item !== "") && dataUser?.knowledge?.split("\n").filter((item) => item !== "").length > 0 &&
+                                        dataUser?.knowledge?.split("\n").filter((item) => item !== "").map((item, index) => {
                                             return (
                                                 <div className='container' key={`item-${index}`}>
                                                     <div className='icon'>
@@ -226,10 +227,10 @@ const InfomationEmployee = (props: IInfomationEmployee) => {
                             {dataToSendLeader?.name}
                         </div>
                         <div className='team'>
-                            {dataToSendLeader?.team == STATUS_All.ONE && NAME_TEAM.ONE}
-                            {dataToSendLeader?.team == STATUS_All.TWO && NAME_TEAM.TWO}
-                            {dataToSendLeader?.team == STATUS_All.THREE && NAME_TEAM.THREE}
-                            {dataToSendLeader?.team == STATUS_All.FOUR && NAME_TEAM.FOUR}
+                            {dataUser?.team == STATUS_All.ONE && NAME_TEAM.ONE}
+                            {dataUser?.team == STATUS_All.TWO && NAME_TEAM.TWO}
+                            {dataUser?.team == STATUS_All.THREE && NAME_TEAM.THREE}
+                            {dataUser?.team == STATUS_All.FOUR && NAME_TEAM.FOUR}
                         </div>
                     </div>
                     <div className='Contact'>
@@ -238,10 +239,10 @@ const InfomationEmployee = (props: IInfomationEmployee) => {
                                 <WcIcon />
                             </div>
                             <div className='text'>
-                                {dataToSendLeader?.gender == STATUS_All.ZERO && NAME_GENDER.ZERO}
-                                {dataToSendLeader?.gender == STATUS_All.ONE && NAME_GENDER.ONE}
-                                {dataToSendLeader?.gender == STATUS_All.TWO && NAME_GENDER.TWO}
-                                {dataToSendLeader?.gender == STATUS_All.THREE && NAME_GENDER.THREE}
+                                {dataUser?.gender == STATUS_All.ZERO && NAME_GENDER.ZERO}
+                                {dataUser?.gender == STATUS_All.ONE && NAME_GENDER.ONE}
+                                {dataUser?.gender == STATUS_All.TWO && NAME_GENDER.TWO}
+                                {dataUser?.gender == STATUS_All.THREE && NAME_GENDER.THREE}
                             </div>
                         </div>
                         <div className='Contact-item'>
@@ -249,7 +250,7 @@ const InfomationEmployee = (props: IInfomationEmployee) => {
                                 <CalendarMonthIcon />
                             </div>
                             <div className='text'>
-                                {moment(dataToSendLeader?.dateOfBirth).format("DD/MM/YYYY")}
+                                {moment(dataUser?.dateOfBirth).format("DD/MM/YYYY")}
                             </div>
                         </div>
                         <div className='Contact-item'>
@@ -257,7 +258,7 @@ const InfomationEmployee = (props: IInfomationEmployee) => {
                                 <LocationOnIcon />
                             </div>
                             <div className='text'>
-                                {dataToSendLeader?.address}
+                                {dataUser?.address}
                             </div>
                         </div>
                     </div>

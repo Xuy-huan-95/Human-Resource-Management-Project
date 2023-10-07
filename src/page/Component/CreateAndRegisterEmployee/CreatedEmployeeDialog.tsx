@@ -35,6 +35,7 @@ const ModalCreatedUser = (props: Iprop) => {
     const [validateInput, setValidateInput] = useState(InitValidateState)
     const { open, setOpen, action } = props
     const [value, setValue] = useState(0);
+    const [created, setCreated] = useState(0);
     const [previreImage, setPrevireImage] = useState<string>("")
     const [openRegistration, setOpenRegistration] = useState(false);
     const [CreateData] = useCreateEmployeeMutation()
@@ -45,31 +46,51 @@ const ModalCreatedUser = (props: Iprop) => {
 
     };
     const handleCreateUser = async () => {
-        let validateData = validateUseInfo(dataUpdateInistate, formDataCreate, validateInput, setValidateInput)
-        if (validateData == true) {
-            let result = await CreateData(formDataCreate).unwrap()
-            if (Object.values(result)[0] === RESPONSE_STATUS_CODE.SUCCESS) {
-                dispatch(GetResultData(Object.values(result)[2]))
-                toast.success("Bạn đã thêm nhân viên mới thành công")
+        try {
+            let validateData = validateUseInfo(dataUpdateInistate, formDataCreate, validateInput, setValidateInput)
+
+            if (created == 0 && validateData == true) {
+                let result = await CreateData(formDataCreate).unwrap()
+                if (Object.values(result)[0] === RESPONSE_STATUS_CODE.SUCCESS) {
+                    toast.success("Bạn đã thêm nhân viên mới thành công")
+                    dispatch(GetResultData(Object.values(result)[2]))
+                    setFormDataCreate(Object.values(result)[2])
+                    setOpenRegistration(!openRegistration)
+                    setCreated(1)
+                }
             }
+            if (created == 1) {
+                await handleUpdateUser()
+            }
+
+        } catch (error) {
+            console.log(error)
         }
+
     }
     const handleUpdateUser = async () => {
-        let validateData = validateUseInfo(dataUpdateInistate, formDataCreate, validateInput, setValidateInput)
-        if (validateData == true) {
-            const data = { ...formDataCreate, dateOfBirth: new Date(formDataCreate.dateOfBirth), dateOfIssuanceCard: new Date(formDataCreate.dateOfBirth) }
-            let result = await UpdateData(data).unwrap()
-            if (Object.values(result)[0] == RESPONSE_STATUS_CODE.SUCCESS) {
-                dispatch(GetResultData(Object.values(result)[2]))
-                toast.success("Bạn đã update thành công")
+        try {
+            let validateData = validateUseInfo(dataUpdateInistate, formDataCreate, validateInput, setValidateInput)
+            if (validateData == true) {
+                const data = { ...formDataCreate, dateOfBirth: new Date(formDataCreate.dateOfBirth), dateOfIssuanceCard: new Date(formDataCreate.dateOfBirth) }
+                let result = await UpdateData(data).unwrap()
+                if (Object.values(result)[0] == RESPONSE_STATUS_CODE.SUCCESS) {
+                    toast.success("Bạn đã cập nhật lại thông tin thành công")
+                    dispatch(GetResultData(Object.values(result)[2]))
+                    setOpenRegistration(!openRegistration)
+                }
             }
+        } catch (error) {
+            console.log(error)
         }
     }
     const handleClose = () => {
         setOpen(false);
         setPrevireImage("")
         setValidateInput(InitValidateState)
-        dispatch(GetResultData({}))
+        setCreated(0)
+        setFormDataCreate(dataUpdateInistate)
+
     };
 
     const handleShowhideRegistrationFrom = () => {
@@ -113,6 +134,8 @@ const ModalCreatedUser = (props: Iprop) => {
                             validate={validateInput}
                             validateInput={validateInput}
                             setValidateInput={setValidateInput}
+                            created={created}
+                            setCreated={setCreated}
                         />
                     </CustomTabPanel>
                     <CustomTabPanel value={value} index={STATUS_All.ONE} >

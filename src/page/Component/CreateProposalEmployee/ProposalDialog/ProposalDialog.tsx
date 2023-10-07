@@ -53,7 +53,7 @@ const ProposalDialog = () => {
                 }).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã thêm thành công đề xuất tham mưu")
-                    setDataProposal({ ...dataProposal, type: "", detailedDescription: "", content: "", proposalDate: moment(new Date()).format("YYYY-MM-DD") })
+                    setDataProposal({ ...dataProposal, type: 0, detailedDescription: "", content: "", proposalDate: moment(new Date()).format("YYYY-MM-DD") })
                     setValidate(validateProposal)
                     setOpenRegisterForm(!openRegisterForm)
                     dispatch(GetResultProposal(result.data[0]))
@@ -93,21 +93,18 @@ const ProposalDialog = () => {
             if (check == true) {
                 let result = await update(dataProposal as IProposal).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
-                    console.log("result.data[0]", result)
+                    console.log("result.data[0]", result.data)
                     toast.success("Bạn đã cập nhật thông tin thành công")
                     setActionProposal("")
-                    setDataProposal({ ...dataProposal, type: "", detailedDescription: "", content: "", proposalDate: moment(new Date()).format("YYYY-MM-DD") })
+                    setDataProposal({ ...dataProposal, type: 0, detailedDescription: "", content: "", proposalDate: moment(new Date()).format("YYYY-MM-DD") })
                     setValidate(validateProposal)
                     setOpenRegisterForm(!openRegisterForm)
                     dispatch(GetResultProposal(result.data))
-                    if ((result.data.type as any) == STATUS_All.ONE) setOption("Propose")
+                    if (result.data.type == STATUS_All.ONE) setOption("Propose")
                     if (result.data.type == STATUS_All.TWO) setOption("Recommend")
                     if (result.data.type == STATUS_All.THREE) setOption("Advisory")
                 }
-
             }
-
-
         } catch (error) {
 
         }

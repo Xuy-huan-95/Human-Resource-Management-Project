@@ -15,7 +15,7 @@ import Input from "../../../ShareComponent/Input/Input"
 import InputGenderSelecter from "../../../ShareComponent/Input/InputSelectet/InputGenderSelecter"
 import InputTeamSelecter from "../../../ShareComponent/Input/InputSelectet/InputTeamSelecter"
 import { RESPONSE_STATUS_CODE, ERROR_STATUS_EMPTY, ERROR_STATUS_SYNTAX } from "../../../ShareComponent/Constants/StatusCode"
-
+import { useAppSelector } from "../../../../redux/hook"
 interface IPropCreateUser {
     formDataCreate: Omit<IUser, 'id'>
     setFormDataCreate: any
@@ -29,7 +29,8 @@ interface IPropCreateUser {
     setValidateInput: any,
 }
 const CreateEmployeeInfomationDialog = (props: IPropCreateUser | any) => {
-    const { formDataCreate, setFormDataCreate, previreImage, setPrevireImage, action, imageUpdate, validateInput, setValidateInput } = props
+    const dataToSendLeader = useAppSelector((state) => state.registerUser.userInfomation)
+    const { formDataCreate, setFormDataCreate, previreImage, setPrevireImage, action, imageUpdate, validateInput, setValidateInput, } = props
     const handleFileUpload = async (file: any) => {
         if (!file[0].name.match(/\.(jpg|jpeg|png|gif|webp)$/)) {
             toast.error("File bạn chọn không phải là file ảnh, Vui lòng chọn đúng file ảnh")
@@ -52,20 +53,18 @@ const CreateEmployeeInfomationDialog = (props: IPropCreateUser | any) => {
 
     return (
         <div>
-            <Box sx={{ flexGrow: 1 }}>
+            <Box >
                 <Grid container spacing={2} columns={19} className='gird-all'  >
                     <Grid item lg={5} sm={19} >
                         <div className='left'>
                             <div className='icon-content'>
-
                                 {previreImage ?
                                     <Avatar
                                         alt="Remy Sharp"
-                                        src={previreImage}
-                                        sx={{ width: 300, height: 300, marginBottom: "20px" }}
+                                        src={previreImage ? previreImage : dataToSendLeader.image}
+                                        className='image_pixel'
                                     />
                                     : <AccountCircleIcon />}
-
                                 <Stack direction="row" alignItems="center" spacing={2}>
                                     <label htmlFor="upload-image">
                                         <Button variant="contained" component="span" className='btn-upload'>
@@ -181,17 +180,15 @@ const CreateEmployeeInfomationDialog = (props: IPropCreateUser | any) => {
                         <br />
                         <Grid container item spacing={2} className='gird-row'>
                             <Grid item xs={4}>
-                                <Grid item xs={12}>
-                                    <Input
-                                        label={"Số căn cước công dân"}
-                                        type={"text"}
-                                        value={formDataCreate?.citizenIdentificationNumber}
-                                        FuntionOnchange={(event) => handleOnChangeInputUserInfo("citizenIdentificationNumber", event.target.value, formDataCreate, setFormDataCreate, validateInput, setValidateInput)}
-                                        Validate={validateInput.citizenIdentificationNumber}
-                                        ErrorEmpty={ERROR_STATUS_EMPTY.NIGHT}
-                                        ErrorSyntax={ERROR_STATUS_SYNTAX.NIGHT}
-                                    />
-                                </Grid>
+                                <Input
+                                    label={"Số căn cước công dân"}
+                                    type={"text"}
+                                    value={formDataCreate?.citizenIdentificationNumber}
+                                    FuntionOnchange={(event) => handleOnChangeInputUserInfo("citizenIdentificationNumber", event.target.value, formDataCreate, setFormDataCreate, validateInput, setValidateInput)}
+                                    Validate={validateInput.citizenIdentificationNumber}
+                                    ErrorEmpty={ERROR_STATUS_EMPTY.NIGHT}
+                                    ErrorSyntax={ERROR_STATUS_SYNTAX.NIGHT}
+                                />
                             </Grid>
                             <Grid item xs={4} >
                                 <Input

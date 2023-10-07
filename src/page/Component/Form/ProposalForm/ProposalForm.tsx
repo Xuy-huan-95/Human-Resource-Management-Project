@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hook";
 import "./ProposalForm.scss"
 import moment from "moment";
 import Signature from "../../../ShareComponent/Signature/Signature"
-import { NAME_TYPE, STATUS_All, STATUS_PROFILE } from "../../../ShareComponent/Constants/StatusIfomation"
+import { NAME_TYPE, STATUS_PROFILE, STATUS_All } from "../../../ShareComponent/Constants/StatusIfomation"
 
 const Recomement = () => {
     const dataToSendLeader = useAppSelector((state) => state.registerUser.userInfomation)
@@ -38,9 +38,9 @@ const Recomement = () => {
                 </div>
                 <div className="body-recommend">
                     <div className="title">
-                        {proposalData.type == STATUS_PROFILE.ONE && NAME_TYPE.ONE}
-                        {proposalData.type == STATUS_PROFILE.TWO && NAME_TYPE.TWO}
-                        {proposalData.type == STATUS_PROFILE.THREE && NAME_TYPE.THREE}
+                        {proposalData.type == STATUS_All.ONE && NAME_TYPE.ONE}
+                        {proposalData.type == STATUS_All.TWO && NAME_TYPE.TWO}
+                        {proposalData.type == STATUS_All.THREE && NAME_TYPE.THREE}
                     </div>
                     <div className="detail-text">
                         <div>

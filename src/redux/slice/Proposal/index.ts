@@ -15,7 +15,7 @@ export const ProposalAPI = createApi({
       providesTags(result) {
         if (result) {
           const final = [
-            ...result?.data.map(({ id }) => ({
+            ...result.data.map(({ id }) => ({
               type: "ProposalAPI" as const,
               id,
             })),

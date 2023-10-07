@@ -7,11 +7,11 @@ import { useAppDispatch, useAppSelector } from "../../../../redux/hook";
 import Signature from "../../../ShareComponent/Signature/Signature"
 import TableResume from "../../Table/TableResume/TableResume"
 import { STATUS_All, NAME_GENDER } from "../../../ShareComponent/Constants/StatusIfomation"
-import React from "react";
+import React, { useEffect } from "react";
 
 const ResumeForm = () => {
     const dataToSendLeader = useAppSelector((state) => state.registerUser.userInfomation)
-    const { data } = useGetEmployeeByIdQuery(dataToSendLeader.id)
+    const { data } = useGetEmployeeByIdQuery(dataToSendLeader.id, { refetchOnMountOrArgChange: true })
 
     return (
         <div className='resume-container'>

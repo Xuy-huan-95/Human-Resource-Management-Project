@@ -19,7 +19,7 @@ const TableEnd = () => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-    const { data, isLoading } = useGetCreateUserQuery({ pageIndex: page + 1, pageSize: rowsPerPage, keyword: search, listStatus: "7,0" })
+    const { data, isLoading } = useGetCreateUserQuery({ pageIndex: page + 1, pageSize: rowsPerPage, keyword: search, listStatus: "7,0" }, { refetchOnMountOrArgChange: true })
     return (
         <div>
             <BreadcrumbsModal

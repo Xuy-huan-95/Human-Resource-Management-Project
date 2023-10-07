@@ -66,7 +66,8 @@ export const RELATIONSHIP = {
 	ONE: "Ông/bà",
 	TWO: "Cha/mẹ",
 	THREE: "Cô/Gì/Chú/bác",
-	FOUR: "Anh/chị/em"
+	FOUR: "Anh/chị/em",
+	FIVE: "Vợ"
 }
 
 export const NAME_TEAM = {

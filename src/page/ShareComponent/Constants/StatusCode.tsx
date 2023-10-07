@@ -1,11 +1,14 @@
 export const RESPONSE_STATUS_CODE = {
     SUCCESS: 200,
+    WRONGEMAIL: 4301
 };
+
 
 
 export const ERROR_CODE = {
     EMPTY: "1",
-    SYNTAX: "2"
+    SYNTAX: "2",
+    OTHER: "3"
 }
 
 export const ERROR_STATUS_EMPTY = {
@@ -57,8 +60,8 @@ export const ERROR_STATUS_EMPTY = {
 
 export const ERROR_STATUS_SYNTAX = {
     ONE: "Tên của nhân viên không có số bên trong",
-    TWO: "Mã nhân viên định dạng NV + 23 + 3 số bất kỳ",
-    THREE: "Định dạng Email là ABC123@gmail.com",
+    TWO: "Mã nhân viên định dạng NV + 2 số cuối năm hiện tại + 3 số bất kỳ",
+    THREE: "Định dạng Email là ABC123@gmail.com và email không viết chữ có dấu",
     FOUR: "Định dạng số điện là 10 số",
     EIGHT: "Người đăng ký vui lòng đủ 18 tuổi",
     NIGHT: "Số căn cước công dân phải lớn hơn 9 và nhỏ hơn 12 số",

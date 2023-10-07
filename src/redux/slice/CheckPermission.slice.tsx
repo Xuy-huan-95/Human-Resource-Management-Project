@@ -14,10 +14,8 @@ const PermissionSlice = createSlice({
     initialState: initialSate,
     reducers: {
         GetPermisson: (state, { payload }) => {
-            console.log("payload", payload)
             state.name = payload;
         },
-
     },
 
 })

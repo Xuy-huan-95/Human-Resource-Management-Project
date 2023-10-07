@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import "./EmployeeCertificateDialog.scss"
 import Grid from '@mui/material/Grid';
@@ -15,7 +15,7 @@ import ButtonCancel from "../../../ShareComponent/Button/ButtonCancel"
 import Input from "../../../ShareComponent/Input/Input"
 import { RESPONSE_STATUS_CODE, ERROR_STATUS_EMPTY, ERROR_STATUS_SYNTAX } from "../../../ShareComponent/Constants/StatusCode"
 import TableCertificate from "../../Table/TableCertificate/TableCertificate"
-import { STATUS_All } from "../../../ShareComponent/Constants/StatusIfomation"
+
 const EmployeeCertificateDialog = () => {
     const dataToSendLeader = useAppSelector((state) => state.registerUser.userInfomation)
     const [createCertificateData, setCreateCertificateData] = useState(InitCertificateData)
@@ -23,24 +23,30 @@ const EmployeeCertificateDialog = () => {
     const [CreateCertificate] = useCreateCertificateMutation()
     const [Delete] = useDeleteCertificateMutation()
     const [update] = useUpdateCertificateMutation()
-    const { data } = useGetCertificateByEmployeeIdQuery(dataToSendLeader.id)
+    const { data } = useGetCertificateByEmployeeIdQuery(dataToSendLeader.id, { refetchOnMountOrArgChange: true })
     const [acitonCertificate, setAcitonCertificate] = useState<string>("")
     const handleCreateCertificate = async () => {
-        let check = validateCertificate(InitCertificateData, createCertificateData, setCreateCertificateData, validateCertificateData, setValidateCertificateData)
-        if (dataToSendLeader.id == STATUS_All.ZERO) {
-            toast.info("Vui lòng tạo thông tin nhân viên trước khi qua tạo thông tin văn bằng")
-            return;
-        }
-        if (check === true) {
-            let result = await CreateCertificate({
-                employeeId: dataToSendLeader.id,
-                data: [createCertificateData]
-            }).unwrap()
-            if (result.code === RESPONSE_STATUS_CODE.SUCCESS) {
-                toast.success("Bạn đã thêm mới văn bằng")
-                setCreateCertificateData(InitCertificateData)
-                setValidateCertificateData(InitValidateCertificate)
+        try {
+            let check = validateCertificate(InitCertificateData, createCertificateData, setCreateCertificateData, validateCertificateData, setValidateCertificateData)
+            if (!dataToSendLeader.id) {
+                toast.info("Vui lòng tạo thông tin nhân viên trước khi qua tạo thông tin văn bằng")
+                return;
             }
+            if (check === true) {
+                let result = await CreateCertificate({
+                    employeeId: dataToSendLeader.id,
+                    data: [createCertificateData]
+                }).unwrap()
+                if (result.code === RESPONSE_STATUS_CODE.SUCCESS) {
+                    console.log("dataToSendLeader", dataToSendLeader)
+                    console.log("data", result.data)
+                    toast.success("Bạn đã thêm mới văn bằng")
+                    setCreateCertificateData(InitCertificateData)
+                    setValidateCertificateData(InitValidateCertificate)
+                }
+            }
+        } catch (error) {
+            console.log(error)
         }
     }
     const handleSetActionEdit = (value: any) => {
@@ -48,34 +54,45 @@ const EmployeeCertificateDialog = () => {
         if (value) setCreateCertificateData({ ...value, issueDate: moment(value.issueDate).format("YYYY-MM-DD") })
     }
     const handleEdit = async () => {
-        let check = validateCertificate(InitCertificateData, createCertificateData, setCreateCertificateData, validateCertificateData, setValidateCertificateData)
-        if (createCertificateData && check === true) {
-            let result = await update(createCertificateData as ICertificate)
-            if (Object.values(result)[0].code === RESPONSE_STATUS_CODE.SUCCESS) {
-                toast.success("Bạn đã chỉnh sửa thành công")
-                setAcitonCertificate("")
-                setCreateCertificateData(InitCertificateData)
-                setValidateCertificateData(InitValidateCertificate)
+        try {
+            let check = validateCertificate(InitCertificateData, createCertificateData, setCreateCertificateData, validateCertificateData, setValidateCertificateData)
+            if (createCertificateData && check === true) {
+                let result = await update(createCertificateData as ICertificate)
+                if (Object.values(result)[0].code === RESPONSE_STATUS_CODE.SUCCESS) {
+                    toast.success("Bạn đã chỉnh sửa thành công")
+                    setAcitonCertificate("")
+                    setCreateCertificateData(InitCertificateData)
+                    setValidateCertificateData(InitValidateCertificate)
+                }
             }
+        } catch (error) {
+            console.log(error)
         }
     }
     const handleDelete = async (value: any) => {
-        if (value) {
-            let result = await Delete(value.id)
-            if (Object.values(result)[0].code === RESPONSE_STATUS_CODE.SUCCESS) {
-                setValidateCertificateData(InitValidateCertificate)
-                setAcitonCertificate("")
-                setCreateCertificateData(InitCertificateData)
+        try {
+            if (value) {
+                let result = await Delete(value.id)
+                if (Object.values(result)[0].code === RESPONSE_STATUS_CODE.SUCCESS) {
+                    setValidateCertificateData(InitValidateCertificate)
+                    setAcitonCertificate("")
+                    setCreateCertificateData(InitCertificateData)
+                }
             }
+        } catch (error) {
+            console.log(error)
         }
     }
     const handleResetInput = () => {
         setCreateCertificateData(InitCertificateData)
         setValidateCertificateData(InitValidateCertificate)
         setAcitonCertificate("")
-
     }
 
+    useEffect(() => {
+        console.log("data", data)
+        console.log("dataToSendLeader", dataToSendLeader)
+    }, [open])
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>

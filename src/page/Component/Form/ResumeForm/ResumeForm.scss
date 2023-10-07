@@ -7,25 +7,25 @@
     .resume-content{
         overflow: auto;
         margin: 30px 70px 30px 70px;
-        padding: 50px;
         background: white;
         box-shadow: 0 0 10px #ccc;    
+        // width: 1000px;
         .resume-body-header{
             display: flex;
             align-items: center;
-            justify-content: center;
             height: 200px;
-            margin-bottom: 10px;
-            width: 100%;
+            width:100%;
             margin-top: 40px;
 
             .image-user{
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                flex: 30%;
               
              }
              .title{
+                flex: 70%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -35,8 +35,8 @@
                     justify-content: center;
                     flex-direction: column;
                     font-weight: 700;
-                    font-size: 24px;
-                    margin-right: 80px;
+                    font-size: 25px;
+                    margin-right: 100px;
                 }
              }
         }
@@ -49,18 +49,17 @@
                     .container{
                         display: flex;
                         justify-content: space-between;
-                        gap: 5px;
                         .row{
                             display: flex;
                             justify-content: space-between;
-                            width: 60%;
+                            width: 74%;
                             .title{
                                 display: flex;
                                 
                             }
                             .value{
                                 border-bottom: 1px dotted black;
-                                width: 80%;
+                                width: 83%;
                                 margin-bottom: 28px;
                                 position: relative;
                                 div{
@@ -75,11 +74,11 @@
                         .row_two{
                             display: flex;
                             justify-content: space-between;
-                            width: 40%;
+                            width: 25%;
 
                             .value{
                                 border-bottom: 1px dotted black;
-                                width: 240px;
+                                width: 140px;
                                 margin-bottom: 28px;
                                 position: relative;
                                 div{
@@ -100,7 +99,7 @@
                             }
                             .value{
                                 border-bottom: 1px dotted black;
-                                width: 88%;
+                                width: 87.5%;
                                 margin-bottom: 28px;
                                 position: relative;
                                 div{

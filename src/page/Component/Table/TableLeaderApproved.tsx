@@ -20,7 +20,7 @@ const LeaderApproved = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const { data, isLoading } = useGetCreateUserQuery({ pageIndex: page + 1, pageSize: rowsPerPage, keyword: search, listStatus: "3,7" })
+  const { data, isLoading } = useGetCreateUserQuery({ pageIndex: page + 1, pageSize: rowsPerPage, keyword: search, listStatus: "3,7" }, { refetchOnMountOrArgChange: true })
   return (
     <div>
       <BreadcrumbsModal

@@ -22,7 +22,7 @@ const TableCertificate = (props: ITableCertificate) => {
     const classes = useStyles();
     const { data, handleSetActionEdit, handleDelete } = props
     return (
-        <Grid >
+        <Grid  >
             <Grid >
                 <TableContainer >
                     <Table stickyHeader aria-label="sticky table" className={classes.table}>

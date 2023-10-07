@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import { useCreateFamilyMutation, useGetFamilyByemployeeIdQuery, useDeleteFamilyMutation, useUpdateFamilyMutation } from "../../../../redux/slice/fammily/index"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IFamily } from "../../../../interface/Family.interface"
 import { toast } from 'react-toastify';
 import moment from 'moment';
@@ -15,43 +15,58 @@ import { ERROR_STATUS_EMPTY, ERROR_STATUS_SYNTAX } from "../../../ShareComponent
 import InputGenderSelecter from "../../../ShareComponent/Input/InputSelectet/InputGenderSelecter"
 import InputRelationshipSelecter from "../../../ShareComponent/Input/InputSelectet/InputRelationshipSelecter"
 import TableRelative from "../../Table/TableRelative/TableRelative"
-
+import { RESPONSE_STATUS_CODE, ERROR_CODE } from "../../../ShareComponent/Constants/StatusCode"
 const RelativeEmployeeDialog = () => {
     const dataToSendLeader = useAppSelector((state) => state.registerUser.userInfomation)
     const [fammilyData, setFammilyData] = useState(initRelativeInfo)
     const [validateFammilyData, setValidateFammilyData] = useState(InitValidateRelativeInfo)
     const [actionRelative, setActionRelative] = useState<string>("")
     const [create] = useCreateFamilyMutation()
-    const { data } = useGetFamilyByemployeeIdQuery(dataToSendLeader.id)
+    const { data } = useGetFamilyByemployeeIdQuery(dataToSendLeader.id, { refetchOnMountOrArgChange: true })
     const [Delete] = useDeleteFamilyMutation()
     const [Update] = useUpdateFamilyMutation()
 
     const handleCreateRelative = async () => {
-        let check = validateUseRelative(initRelativeInfo, fammilyData, validateFammilyData, setValidateFammilyData)
-        if (dataToSendLeader.id === 0) {
-            toast.info("Vui lòng tạo thông tin nhân viên trước khi qua tạo thông tin quan hệ gia đình")
-            return;
+        try {
+            let check = validateUseRelative(initRelativeInfo, fammilyData, validateFammilyData, setValidateFammilyData)
+            if (!dataToSendLeader.id) {
+                toast.info("Vui lòng tạo thông tin nhân viên trước khi qua tạo thông tin quan hệ gia đình")
+                return;
+            }
+
+            if (dataToSendLeader.id > 0 && check === true) {
+                let result = await create({
+                    employeeId: dataToSendLeader.id,
+                    data: [fammilyData]
+                })
+                if (Object.values(result)[0].code == RESPONSE_STATUS_CODE.SUCCESS) {
+                    console.log("Object.values(result)[0]", Object.values(result)[0])
+                    console.log("dataToSendLeader", dataToSendLeader)
+                    toast.success("bạn đã thêm thành công quan hệ gia đình")
+                    setFammilyData(initRelativeInfo)
+                    setValidateFammilyData(InitValidateRelativeInfo)
+                    setActionRelative("")
+                }
+                if (Object.values(result)[0].code == RESPONSE_STATUS_CODE.WRONGEMAIL) {
+                    setValidateFammilyData({ ...InitValidateRelativeInfo, email: ERROR_CODE.SYNTAX })
+                }
+            }
+        } catch (error) {
+            console.log(error)
         }
 
-        if (dataToSendLeader.id > 0 && check === true) {
-            let result = await create({
-                employeeId: dataToSendLeader.id,
-                data: [fammilyData]
-            })
-            if (Object.values(result)[0].code == 200) {
-                toast.success("bạn đã thêm thành công quan hệ gia đình")
-                setFammilyData(initRelativeInfo)
-                setValidateFammilyData(InitValidateRelativeInfo)
-                setActionRelative("")
-            }
-        }
     }
     const handleDelete = async (item: any) => {
-        let result = await Delete(item.id)
-        if (Object.values(result)[0].code == 200) {
-            setActionRelative("")
-            toast.success("bạn đã xóa thành công")
+        try {
+            let result = await Delete(item.id)
+            if (Object.values(result)[0].code == RESPONSE_STATUS_CODE.SUCCESS) {
+                setActionRelative("")
+                toast.success("bạn đã xóa thành công")
+            }
+        } catch (error) {
+            console.log(error)
         }
+
     }
     const handleSelectActionUpdate = async (item: any) => {
         if (item) setFammilyData({ ...item, dateOfBirth: moment(item.dateOfBirth).format("YYYY-MM-DD") })
@@ -65,7 +80,7 @@ const RelativeEmployeeDialog = () => {
                 id: (fammilyData as IFamily).id,
                 data: fammilyData as IFamily
             })
-            if (Object.values(result)[0].code == 200) {
+            if (Object.values(result)[0].code == RESPONSE_STATUS_CODE.SUCCESS) {
                 toast.success("Bạn đã cập nhật thông tin thành công")
                 setActionRelative("")
                 setFammilyData(initRelativeInfo)
@@ -77,6 +92,7 @@ const RelativeEmployeeDialog = () => {
         setFammilyData(initRelativeInfo)
         setValidateFammilyData(InitValidateRelativeInfo)
     }
+
 
     return (
         <div>

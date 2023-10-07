@@ -9,8 +9,12 @@ import Pagination from "../../ShareComponent/Pagination/Pagination"
 import TableShare from "../../ShareComponent/Table/TableEmployee"
 import SearchShare from "../../ShareComponent/Search/Search"
 import BreadcrumbsModal from "../../ShareComponent/Breadcrumbs/Breadcrumbs"
+import { GetResultData } from "../../../redux/slice/RegisterUser.slice"
+import { useAppDispatch, useAppSelector } from "../../../redux/hook";
+
 
 const TableAddNewUser = () => {
+  const dispatch = useAppDispatch()
   const [openModalCreate, setOpenModalCreate] = useState(false);
   const [action, setAction] = useState<string>("");
   const [page, setPage] = useState(1);
@@ -26,7 +30,8 @@ const TableAddNewUser = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const { data, isLoading } = useGetCreateUserQuery({ pageIndex: page + 1, pageSize: rowsPerPage, keyword: search, listStatus: "1,2,4,5" })
+  const { data, isLoading } = useGetCreateUserQuery({ pageIndex: page + 1, pageSize: rowsPerPage, keyword: search, listStatus: "1,2,4,5" }, { refetchOnMountOrArgChange: true })
+
   const handleShowhideModalCreatedUser = () => {
     setOpenModalCreate(!openModalCreate);
     setAction("Create");
@@ -47,9 +52,9 @@ const TableAddNewUser = () => {
       <div className="btn-add-new">
         <Button
           variant="contained"
-          size="medium"
-          sx={{ background: "#7467ef" }}
+          size="small"
           onClick={() => handleShowhideModalCreatedUser()}
+          className="btn_plus"
         >
           <PersonAddAltIcon /> <span>Thêm mới</span>
         </Button>

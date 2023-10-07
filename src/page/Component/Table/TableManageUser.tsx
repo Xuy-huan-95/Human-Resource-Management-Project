@@ -31,7 +31,7 @@ const TableManageUser = () => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const { data, isLoading } = useGetCreateUserQuery({ pageIndex: page + 1, pageSize: rowsPerPage, keyword: search, listStatus: "3,8,6,9" })
+  const { data, isLoading } = useGetCreateUserQuery({ pageIndex: page + 1, pageSize: rowsPerPage, keyword: search, listStatus: "3,8,6,9" }, { refetchOnMountOrArgChange: true })
   return (
     <div>
       <div className='Breadcrumbs'>

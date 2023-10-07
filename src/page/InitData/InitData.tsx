@@ -259,7 +259,7 @@ export const dataApprove: {
 export const initProposal: Pick<IProposal, "content" | "proposalDate" | "type" | "detailedDescription"> = {
     content: "",
     proposalDate: "",
-    type: "",
+    type: 0,
     detailedDescription: "",
 }
 
@@ -278,7 +278,7 @@ export const dataUpdateProposal: IProposal = {
     proposalStatus: "",
     reasonForRefusal: "",
     rejectionDate: "",
-    type: ""
+    type: 0
 }
 
 export const validateProcess: {

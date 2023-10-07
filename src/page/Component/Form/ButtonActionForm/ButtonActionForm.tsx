@@ -43,9 +43,7 @@ const ButtonActionForm = (props: IButtonActionForm) => {
         handlShowHideModalRefuseProposal
     } = props
 
-    useEffect(() => {
-        console.log("dataToSendLeader", dataToSendLeader)
-    }, [])
+
 
     return (
         <>
@@ -53,9 +51,20 @@ const ButtonActionForm = (props: IButtonActionForm) => {
                 && dataToSendLeader.submitProfileStatus !== STATUS_PROFILE.ZERO && dataToSendLeader.submitProfileStatus !== STATUS_PROFILE.SEVEN
                 && option !== "Recommend" && option !== "Propose" && option !== "Advisory" &&
                 <DialogActions>
+                    {option !== "salary_Increate" && option !== "Process_increate" && dataToSendLeader.submitProfileStatus == STATUS_PROFILE.ONE &&
+                        < ButtonSubmit
+                            handleFuntion={() => handleSaveInfomationUser()}
+                            name={"Lưu lại"}
+                        />
+                    }
 
-
-                    {option !== "salary_Increate" && option !== "Process_increate" && dataToSendLeader.submitProfileStatus == STATUS_PROFILE.ONE && dataToSendLeader.submitProfileStatus == STATUS_PROFILE.FOUR && dataToSendLeader.submitProfileStatus == STATUS_PROFILE.FIVE &&
+                    {dataToSendLeader.submitProfileStatus == STATUS_PROFILE.FOUR &&
+                        < ButtonSubmit
+                            handleFuntion={() => handleSaveInfomationUser()}
+                            name={"Lưu lại"}
+                        />
+                    }
+                    {dataToSendLeader.submitProfileStatus == STATUS_PROFILE.FIVE &&
                         < ButtonSubmit
                             handleFuntion={() => handleSaveInfomationUser()}
                             name={"Lưu lại"}
@@ -78,12 +87,10 @@ const ButtonActionForm = (props: IButtonActionForm) => {
                     }
                     {option == "salary_Increate" && dataSalry && dataSalry.salaryIncreaseStatus !== STATUS_SALARY.TWO ?
                         <>
-
                             <ButtonSubmit
                                 handleFuntion={() => handleShowHideModalSendDataToLeader()}
                                 name={"Trình lãnh đạo"}
                             />
-
                             < ButtonCancel
                                 handleCancel={handleClose}
                             />

@@ -56,13 +56,12 @@ const Form = (props: IForm | any) => {
     const [update] = useUpdateEmployeeMutation()
     const [dataUser, setDataUser] = useState(dataUpdateInistateWithId)
     const [id, setId] = useState(0)
-    const { data } = useGetEmployeeByIdQuery(id)
+    const { data } = useGetEmployeeByIdQuery(id, { refetchOnMountOrArgChange: true })
     const [openApproveModal, setOpenApproveModal] = useState<boolean>(false)
     const [actionApprove, setActionApprove] = useState<string>("")
     useEffect(() => {
         if (data && data.code == RESPONSE_STATUS_CODE.SUCCESS) {
             dispatch(GetResultData(data?.data))
-            console.log("data?.data", data?.data)
         }
     }, [data])
 
@@ -154,12 +153,9 @@ const Form = (props: IForm | any) => {
 
     useEffect(() => {
         setDataUser(dataToSendLeader)
+        console.log("dataToSendLeader", dataToSendLeader)
     }, [dataToSendLeader])
 
-    useEffect(() => {
-        console.log("option", option)
-        console.log("dataSalry", dataSalry)
-    }, [open])
 
     return (
         <div>
@@ -209,7 +205,7 @@ const Form = (props: IForm | any) => {
                                         ""
                                     }
 
-                                    {option == "Propose" || option == "Approve-Proposal" && proposal.type == STATUS_PROFILE.ONE || option == "ProposalView" && proposal.type == STATUS_PROFILE.ONE ?
+                                    {option == "Propose" || option == "Approve-Proposal" && proposal.type == STATUS_All.ONE || option == "ProposalView" && proposal.type == STATUS_All.ONE ?
                                         <ListProposalForm
                                             selectedIndex={selectedIndex}
                                             handleListItemClick={handleListItemClick}
@@ -217,7 +213,7 @@ const Form = (props: IForm | any) => {
                                         :
                                         ""
                                     }
-                                    {option == "Recommend" || option == "Approve-Proposal" && proposal.type == STATUS_PROFILE.TWO || option == "ProposalView" && proposal.type == STATUS_PROFILE.TWO ?
+                                    {option == "Recommend" || option == "Approve-Proposal" && proposal.type == STATUS_All.TWO || option == "ProposalView" && proposal.type == STATUS_All.TWO ?
                                         <ListRecommentForm
                                             selectedIndex={selectedIndex}
                                             handleListItemClick={handleListItemClick}
@@ -225,7 +221,7 @@ const Form = (props: IForm | any) => {
                                         :
                                         ""
                                     }
-                                    {option == "Advisory" || option == "Approve-Proposal" && proposal.type == STATUS_PROFILE.THREE || option == "ProposalView" && proposal.type == STATUS_PROFILE.THREE ?
+                                    {option == "Advisory" || option == "Approve-Proposal" && proposal.type == STATUS_All.THREE || option == "ProposalView" && proposal.type == STATUS_All.THREE ?
                                         <ListAdvisoryForm
                                             selectedIndex={selectedIndex}
                                             handleListItemClick={handleListItemClick}
@@ -267,9 +263,9 @@ const Form = (props: IForm | any) => {
                                         :
                                         ""
                                     }
-                                    {option == "Recommend" || option == "Approve-Proposal" && proposal.type == STATUS_PROFILE.ONE || option == "Propose"
+                                    {option == "Recommend" || option == "Approve-Proposal" && proposal.type == STATUS_All.ONE || option == "Propose"
                                         ||
-                                        option == "Approve-Proposal" && proposal.type == STATUS_PROFILE.TWO || option == "Advisory" || option == "Approve-Proposal" && proposal.type == STATUS_PROFILE.THREE
+                                        option == "Approve-Proposal" && proposal.type == STATUS_All.TWO || option == "Advisory" || option == "Approve-Proposal" && proposal.type == STATUS_All.THREE
                                         || option == "ProposalView"
                                         ?
                                         <div className='wrapper'>

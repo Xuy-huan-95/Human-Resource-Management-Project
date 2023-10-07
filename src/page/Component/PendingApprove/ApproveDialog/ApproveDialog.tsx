@@ -142,7 +142,6 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                 let dataUpdate = { ...dataUser, terminationAppointmentDate: data.time, submitProfileStatus: STATUS_PROFILE.SEVEN }
                 let result = await update(dataUpdate).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
-                    console.log("actionApprove", actionApprove)
                     toast.success("Bạn đã phê duyệt kết thúc hồ sơ thành công")
                     setOpen(!open)
                     if (openEndModal == true) setOpenEndModal(false)

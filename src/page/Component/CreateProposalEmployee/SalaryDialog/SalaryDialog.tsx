@@ -61,7 +61,7 @@ const ModalSalaryIncrease = () => {
                 }
             }
         } catch (error) {
-            console.log("error", error)
+            console.log(error)
         }
     }
     const handleEdit = (item: any) => {
