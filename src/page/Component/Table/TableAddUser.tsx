@@ -12,7 +12,6 @@ import BreadcrumbsModal from "../../ShareComponent/Breadcrumbs/Breadcrumbs"
 import { GetResultData } from "../../../redux/slice/RegisterUser.slice"
 import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 
-
 const TableAddNewUser = () => {
   const dispatch = useAppDispatch()
   const [openModalCreate, setOpenModalCreate] = useState(false);
@@ -31,12 +30,11 @@ const TableAddNewUser = () => {
     setPage(0);
   };
   const { data, isLoading } = useGetCreateUserQuery({ pageIndex: page + 1, pageSize: rowsPerPage, keyword: search, listStatus: "1,2,4,5" }, { refetchOnMountOrArgChange: true })
-
   const handleShowhideModalCreatedUser = () => {
     setOpenModalCreate(!openModalCreate);
     setAction("Create");
+    dispatch(GetResultData({}))
   };
-
   return (
     <div>
       <BreadcrumbsModal

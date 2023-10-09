@@ -21,7 +21,7 @@ import "./SendLeaderModal.scss"
 import { RESPONSE_STATUS_CODE } from "../../../ShareComponent/Constants/StatusCode"
 import { STATUS_PROFILE, LEADER_POSITION, STATUS_SALARY } from "../../../ShareComponent/Constants/StatusIfomation"
 import { ERROR_STATUS_EMPTY, ERROR_STATUS_SYNTAX, ERROR_CODE } from "../../../ShareComponent/Constants/StatusCode"
-import { validateDataDataSendToLeader } from "../../../../validate/validate"
+import { validateDataDataSendToLeader } from "../../../../validate/ValidateDataToSendLeader/ValidateDataToSendLeader"
 import moment from "moment"
 
 interface Iprop {

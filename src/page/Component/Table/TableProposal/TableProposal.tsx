@@ -179,11 +179,8 @@ const TableProposal = (props: ITableProposal) => {
                                 handleChangePage={handleChangePage}
                                 handleChangeRowsPerPage={handleChangeRowsPerPage}
                             />
-
                         </TableContainer>
-
                     </Grid>
-
                 </Grid>
             </Grid>
         </div>

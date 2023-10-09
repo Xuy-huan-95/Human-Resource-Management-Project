@@ -11,7 +11,7 @@ import { IProposal } from "../../../../interface/Proposal.interface"
 import DeleteModal from "../DeleteProposalEmployeeDialog"
 import { GetResultProposal } from "../../../../redux/slice/proposal.slice"
 import RegistrationForms from "../../Form/Form"
-import { validateProposalModal, ValidateOnChangeInputProposal } from "../../../../validate/validate"
+import { validateProposalModal, ValidateOnChangeInputProposal } from "../../../../validate/ValidateProposal/ValidateProposal"
 import Input from "../../../ShareComponent/Input/Input"
 import { ERROR_STATUS_EMPTY, ERROR_STATUS_SYNTAX, RESPONSE_STATUS_CODE } from "../../../ShareComponent/Constants/StatusCode"
 import InputTypeProposalselect from "../../../ShareComponent/Input/InputSelectet/InputTypeProposalselect"
@@ -53,7 +53,7 @@ const ProposalDialog = () => {
                 }).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã thêm thành công đề xuất tham mưu")
-                    setDataProposal({ ...dataProposal, type: 0, detailedDescription: "", content: "", proposalDate: moment(new Date()).format("YYYY-MM-DD") })
+                    setDataProposal({ ...dataProposal, type: STATUS_All.ZERO, detailedDescription: "", content: "", proposalDate: moment(new Date()).format("YYYY-MM-DD") })
                     setValidate(validateProposal)
                     setOpenRegisterForm(!openRegisterForm)
                     dispatch(GetResultProposal(result.data[0]))
@@ -63,7 +63,7 @@ const ProposalDialog = () => {
                 }
             }
         } catch (error) {
-            console.log(error)
+            // console.log(error.status)
         }
     }
 
@@ -106,9 +106,7 @@ const ProposalDialog = () => {
                 }
             }
         } catch (error) {
-
         }
-
     }
     const handleDeleteInput = () => {
         setDataProposal({ ...dataProposal, proposalDate: moment(new Date()).format("YYYY-MM-DD") })
@@ -147,7 +145,6 @@ const ProposalDialog = () => {
                                         ErrorEmpty={ERROR_STATUS_EMPTY.TWENTYSIX}
                                     />
                                 </Grid>
-
                             </Grid>
                         </Grid>
                         <br />

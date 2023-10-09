@@ -10,7 +10,7 @@ import DeleteModal from "../DeleteProposalEmployeeDialog"
 import { ISalaryIncreate } from "../../../../interface/SalaryIncreate.interface"
 import RegistrationForms from "../../Form/Form"
 import { validatecreateSalary } from "../../../InitData/InitData"
-import { ValidateDataIncreateSalary, ValidateInputSalaryIncreate } from "../../../../validate/validate"
+import { ValidateDataIncreateSalary, ValidateInputSalaryIncreate } from "../../../../validate/ValidateSalary/ValidateSalary"
 import { useAppDispatch, useAppSelector } from "../../../../redux/hook";
 import { GetResultDataSalary } from "../../../../redux/slice/Increate_Salary.slice "
 import Input from "../../../ShareComponent/Input/Input"
@@ -45,7 +45,8 @@ const ModalSalaryIncrease = () => {
     };
     const handleSubmit = async () => {
         try {
-            let check = ValidateDataIncreateSalary(dataSalaryIncrease, initIcreateSalary, validateSalaryIncrease, setValidateSalaryIncrease)
+            let check = ValidateDataIncreateSalary(dataSalaryIncrease, validateSalaryIncrease, setValidateSalaryIncrease)
+            console.log("check", check)
             if (check == true) {
                 let result = await create({
                     employeId: dataUser.id,
@@ -73,7 +74,7 @@ const ModalSalaryIncrease = () => {
     }
     const handleUpdateState = async () => {
         try {
-            let check = ValidateDataIncreateSalary(dataSalaryIncrease, initIcreateSalary, validateSalaryIncrease, setValidateSalaryIncrease)
+            let check = ValidateDataIncreateSalary(dataSalaryIncrease, validateSalaryIncrease, setValidateSalaryIncrease)
             if (check == true) {
                 let result = await update(dataSalaryIncrease as ISalaryIncreate).unwrap()
                 if (Object.values(result)[0] === RESPONSE_STATUS_CODE.SUCCESS) {
@@ -129,7 +130,7 @@ const ModalSalaryIncrease = () => {
                                 <Grid item xs={4}>
                                     <Input
                                         label={"Lương cũ"}
-                                        type={"text"}
+                                        type={"number"}
                                         value={dataSalaryIncrease.oldSalary}
                                         FuntionOnchange={(event) => ValidateInputSalaryIncreate("oldSalary", event.target.value, dataSalaryIncrease, setDataSalaryIncrease, validateSalaryIncrease, setValidateSalaryIncrease)}
                                         Validate={validateSalaryIncrease.oldSalary}
@@ -140,7 +141,7 @@ const ModalSalaryIncrease = () => {
                                 <Grid item xs={4}>
                                     <Input
                                         label={"Lương mới"}
-                                        type={"text"}
+                                        type={"number"}
                                         value={dataSalaryIncrease.newSalary}
                                         FuntionOnchange={(event) => ValidateInputSalaryIncreate("newSalary", event.target.value, dataSalaryIncrease, setDataSalaryIncrease, validateSalaryIncrease, setValidateSalaryIncrease)}
                                         Validate={validateSalaryIncrease.newSalary}

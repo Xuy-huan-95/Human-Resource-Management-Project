@@ -157,8 +157,6 @@ const ButtonActionForm = (props: IButtonActionForm) => {
                     />
                 </DialogActions>
             }
-
-
             {
                 dataToSendLeader && dataToSendLeader.submitProfileStatus == STATUS_PROFILE.SEVEN && name == "user" &&
                 <DialogActions>
@@ -171,8 +169,6 @@ const ButtonActionForm = (props: IButtonActionForm) => {
                     />
                 </DialogActions>
             }
-
-
             {
                 option == "Recommend" && proposal.proposalStatus == STATUS_PROFILE.ONE &&
                 < DialogActions >
@@ -210,14 +206,7 @@ const ButtonActionForm = (props: IButtonActionForm) => {
                     />
                 </DialogActions>
             }
-            {
-                option == "Propose" && proposal.proposalStatus == STATUS_PROFILE.TWO &&
-                < DialogActions >
-                    <ButtonCancel
-                        handleCancel={handleClose}
-                    />
-                </DialogActions>
-            }
+
             {
                 option == "Propose" && proposal.proposalStatus == STATUS_PROFILE.FOUR &&
                 < DialogActions >

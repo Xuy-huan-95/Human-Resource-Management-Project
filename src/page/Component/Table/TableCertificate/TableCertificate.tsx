@@ -12,15 +12,20 @@ import ButtonDelete from "../../../ShareComponent/Button/ButtonDelete"
 import "./TableCertificate.scss"
 import { useStyles } from "../../../ShareComponent/UseStylesTable/UseStylesTable"
 import React from 'react';
+import Pagination from '../../../ShareComponent/Pagination/Pagination';
 
 interface ITableCertificate {
     data: any
     handleSetActionEdit: (value: any) => void
     handleDelete: (value: any) => Promise<void>
+    page: number
+    rowsPerPage: number
+    handleChangePage: (event: unknown, newPage: number) => void
+    handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 const TableCertificate = (props: ITableCertificate) => {
     const classes = useStyles();
-    const { data, handleSetActionEdit, handleDelete } = props
+    const { data, handleSetActionEdit, handleDelete, page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = props
     return (
         <Grid  >
             <Grid >
@@ -62,7 +67,7 @@ const TableCertificate = (props: ITableCertificate) => {
                         </TableHead>
                         {data && data?.data && data?.data?.length > 0
                             ?
-                            data?.data?.map((item, index) => {
+                            data?.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => {
                                 return (
                                     <TableBody key={`item-${index}`}>
 
@@ -96,6 +101,13 @@ const TableCertificate = (props: ITableCertificate) => {
                         }
 
                     </Table>
+                    <Pagination
+                        data={data}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        handleChangePage={handleChangePage}
+                        handleChangeRowsPerPage={handleChangeRowsPerPage}
+                    />
                 </TableContainer>
 
             </Grid>

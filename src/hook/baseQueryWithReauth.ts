@@ -30,9 +30,6 @@ export const baseQueryWithReauth: BaseQueryFn<
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions);
-  if (result.meta?.response?.status === 401) {
-    toast.error("Phiên đăng nhập đã hết hạn ,mời bạn đăng nhập lại")
-  }
   if (result.meta?.response?.status === 403) {
     // try to get a new token
     const refreshToken = await baseQuery(

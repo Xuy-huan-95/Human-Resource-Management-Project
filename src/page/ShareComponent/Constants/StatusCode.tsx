@@ -1,6 +1,7 @@
 export const RESPONSE_STATUS_CODE = {
     SUCCESS: 200,
-    WRONGEMAIL: 4301
+    WRONGEMAIL: 4301,
+    WRONGCITIZENIDENTIFICATIONNUMBER: 4517
 };
 
 
@@ -31,7 +32,7 @@ export const ERROR_STATUS_EMPTY = {
     SEVENTEEN: "Bạn không được để trống Nội dung văn bằng",
     EIGHTEEN: "Bạn không được để trống Tên người thân",
     NIGHTEEN: "Bạn không được để trống Mối quan hệ",
-    TWENTY: "Bạn không được để trống mức lương cũ",
+    TWENTY: "Bạn không được để trống mức lương cũ ",
     TWENTYONE: "Bạn không được để trống mức lương mới",
     TWENTYTWO: "Ngày hiệu lực không hợp lệ",
     TWENTYTHREE: "Bạn không được để trống lí do muốn tăng lương",
@@ -64,11 +65,11 @@ export const ERROR_STATUS_SYNTAX = {
     THREE: "Định dạng Email là ABC123@gmail.com và email không viết chữ có dấu",
     FOUR: "Định dạng số điện là 10 số",
     EIGHT: "Người đăng ký vui lòng đủ 18 tuổi",
-    NIGHT: "Số căn cước công dân phải lớn hơn 9 và nhỏ hơn 12 số",
+    NIGHT: "Số căn cước công dân phải lớn hơn 9 và nhỏ hơn 12 số và tất cả là số ",
     TEN: "Ngày cấp phải nhỏ hơn hoặc bằng ngày hiện tại",
     SIXTEEN: "Ngày cấp phải trước ngày hiện tại",
     EIGHTEEN: "Tên người thân không có số",
-    TWENTY: "Mức lương cũ phải lớn hơn 0 và nhỏ hơn 1000000000 VND",
+    TWENTY: "Mức lương cũ phải lớn hơn 0 và nhỏ hơn 1000000000 VND và phải nhỏ hơn mức lương mới",
     TWENTYONE: "Mức lương mới phải lớn hơn 0 và nhỏ hơn 1000000000 VND và Mức lương mới cần phải lớn hơn mức lương cũ",
     TWENTYTWO: "Ngày hiệu lực phải lớn hơn ngày hiện tại",
     TWENTYFIVE: "Ngày hiệu lực phải lớn hơn ngày hiện tại",

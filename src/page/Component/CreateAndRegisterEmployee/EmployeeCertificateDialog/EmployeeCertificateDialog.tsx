@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import moment from 'moment';
 import { useDeleteCertificateMutation, useUpdateCertificateMutation } from "../../../../redux/slice/Certificate/index"
 import { InitCertificateData, InitValidateCertificate } from "../../../InitData/InitData"
-import { validateCertificate, handleOnChangeInputCertificateInfo } from "../../../../validate/validate"
+import { validateCertificate, handleOnChangeInputCertificateInfo } from "../../../../validate/ValidateCertificate/ValidateCertificate"
 import { useAppSelector } from "../../../../redux/hook";
 import ButtonSubmit from "../../../ShareComponent/Button/ButtonSubmit"
 import ButtonCancel from "../../../ShareComponent/Button/ButtonCancel"
@@ -25,24 +25,32 @@ const EmployeeCertificateDialog = () => {
     const [update] = useUpdateCertificateMutation()
     const { data } = useGetCertificateByEmployeeIdQuery(dataToSendLeader.id, { refetchOnMountOrArgChange: true })
     const [acitonCertificate, setAcitonCertificate] = useState<string>("")
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(3);
+
+    const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
     const handleCreateCertificate = async () => {
         try {
             let check = validateCertificate(InitCertificateData, createCertificateData, setCreateCertificateData, validateCertificateData, setValidateCertificateData)
-            if (!dataToSendLeader.id) {
-                toast.info("Vui lòng tạo thông tin nhân viên trước khi qua tạo thông tin văn bằng")
-                return;
-            }
             if (check === true) {
                 let result = await CreateCertificate({
                     employeeId: dataToSendLeader.id,
                     data: [createCertificateData]
                 }).unwrap()
                 if (result.code === RESPONSE_STATUS_CODE.SUCCESS) {
-                    console.log("dataToSendLeader", dataToSendLeader)
-                    console.log("data", result.data)
                     toast.success("Bạn đã thêm mới văn bằng")
                     setCreateCertificateData(InitCertificateData)
                     setValidateCertificateData(InitValidateCertificate)
+                }
+                else {
+                    toast.error("Vui lòng kiểm tra lại thông tin trước khi thêm mới")
+
                 }
             }
         } catch (error) {
@@ -63,7 +71,8 @@ const EmployeeCertificateDialog = () => {
                     setAcitonCertificate("")
                     setCreateCertificateData(InitCertificateData)
                     setValidateCertificateData(InitValidateCertificate)
-                }
+                } toast.error("Vui lòng kiểm tra lại thông tin trước khi cập nhật")
+
             }
         } catch (error) {
             console.log(error)
@@ -77,7 +86,7 @@ const EmployeeCertificateDialog = () => {
                     setValidateCertificateData(InitValidateCertificate)
                     setAcitonCertificate("")
                     setCreateCertificateData(InitCertificateData)
-                }
+                } toast.error("Vui lòng kiểm tra lại thông tin trước khi xóa")
             }
         } catch (error) {
             console.log(error)
@@ -88,11 +97,6 @@ const EmployeeCertificateDialog = () => {
         setValidateCertificateData(InitValidateCertificate)
         setAcitonCertificate("")
     }
-
-    useEffect(() => {
-        console.log("data", data)
-        console.log("dataToSendLeader", dataToSendLeader)
-    }, [open])
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>
@@ -160,6 +164,10 @@ const EmployeeCertificateDialog = () => {
                         data={data}
                         handleSetActionEdit={handleSetActionEdit}
                         handleDelete={handleDelete}
+                        page={page}
+                        rowsPerPage={rowsPerPage}
+                        handleChangePage={handleChangePage}
+                        handleChangeRowsPerPage={handleChangeRowsPerPage}
                     />
                 </div>
 

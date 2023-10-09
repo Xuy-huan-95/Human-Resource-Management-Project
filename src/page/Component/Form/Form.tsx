@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -17,7 +16,6 @@ import { GetResultData } from "../../../redux/slice/RegisterUser.slice"
 import moment from 'moment';
 import { useGetEmployeeByIdQuery } from "../../../redux/slice/Employee/index"
 import ApproveActionModal from "../PendingApprove/ApproveDialog/ApproveDialog"
-import Recomement from "./ProposalForm/ProposalForm"
 import ButtonExit from "../../ShareComponent/Button/ButtonExit"
 import ListEmployeeForm from "../../ShareComponent/Form/ListForm/ListEmployeeForm"
 import ListSalaryForm from "../../ShareComponent/Form/ListForm/ListSalaryForm"
@@ -29,10 +27,6 @@ import ContentEmployeeForm from "../../ShareComponent/Form/ContentForm/ContentEm
 import ContentSalaryForm from "../../ShareComponent/Form/ContentForm/ContentSalaryForm"
 import ContentProcessForm from "../../ShareComponent/Form/ContentForm/ContentProcessForm"
 import ContentRecomementForm from "../../ShareComponent/Form/ContentForm/ContentRecomendForm"
-import ButtonSubmit from "../../ShareComponent/Button/ButtonSubmit"
-import ButtonCancel from "../../ShareComponent/Button/ButtonCancel"
-import ButtonResfuse from "../../ShareComponent/Button/ButtonResfuse"
-import SalaryIncreate from "../../Component/Form/SalaryForm/SalaryForm"
 import { STATUS_All, NAME_GENDER, STATUS_PROFILE } from "../../ShareComponent/Constants/StatusIfomation"
 import { RESPONSE_STATUS_CODE } from "../../ShareComponent/Constants/StatusCode"
 import IButtonActionForm from "../Form/ButtonActionForm/ButtonActionForm"
@@ -77,13 +71,16 @@ const Form = (props: IForm | any) => {
         }
     }, [open])
 
+    useEffect(() => {
+        setDataUser(dataToSendLeader)
+    }, [dataToSendLeader])
 
     const handleListItemClick = (index: number) => {
         setSelectedIndex(index);
     };
     const handleClose = () => {
         setOpen(false);
-
+        setSelectedIndex(0)
     };
     const handleShowHideModalSendDataToLeader = () => {
         setOpenModalSendDataToLead(!openModalSendDataToLead)
@@ -142,21 +139,19 @@ const Form = (props: IForm | any) => {
         setActionApprove("Refuse-Document_Proposal")
     }
     const handleSaveInfomationUser = async () => {
-        const data = { ...dataUser, dateOfBirth: new Date(dataUser.dateOfBirth), dateOfIssuanceCard: new Date(dataUser.dateOfBirth) }
-        let result = await update(data).unwrap()
-        if (result.code == 200) {
-            toast.success("Bạn đã cập nhật thông tin nhân viên thành công")
-            dispatch(GetResultData(result.data))
+        try {
+            const data = { ...dataUser, dateOfBirth: new Date(dataUser.dateOfBirth), dateOfIssuanceCard: new Date(dataUser.dateOfBirth) }
+            let result = await update(data).unwrap()
+            if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
+                toast.success("Bạn đã cập nhật thông tin nhân viên thành công")
+                dispatch(GetResultData(result.data))
+            }
+            else toast.error("Vui lòng kiểm tra lại thông tin trước khi cập nhật")
+        } catch (error) {
+            console.log(error)
         }
-        else toast.error("Vui lòng kiểm tra lại thông tin trước khi cập nhật")
+
     }
-
-    useEffect(() => {
-        setDataUser(dataToSendLeader)
-        console.log("dataToSendLeader", dataToSendLeader)
-    }, [dataToSendLeader])
-
-
     return (
         <div>
             <Dialog

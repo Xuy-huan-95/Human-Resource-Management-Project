@@ -10,7 +10,7 @@ import _ from "lodash"
 import moment from 'moment';
 import { uploadImage } from "../../../../api/api"
 import { toast } from 'react-toastify';
-import { handleOnChangeInputUserInfo } from "../../../../validate/validate"
+import { handleOnChangeInputUserInfo } from "../../../../validate/ValidateUseInfo/ValidateUseInfo"
 import Input from "../../../ShareComponent/Input/Input"
 import InputGenderSelecter from "../../../ShareComponent/Input/InputSelectet/InputGenderSelecter"
 import InputTeamSelecter from "../../../ShareComponent/Input/InputSelectet/InputTeamSelecter"
@@ -30,7 +30,7 @@ interface IPropCreateUser {
 }
 const CreateEmployeeInfomationDialog = (props: IPropCreateUser | any) => {
     const dataToSendLeader = useAppSelector((state) => state.registerUser.userInfomation)
-    const { formDataCreate, setFormDataCreate, previreImage, setPrevireImage, action, imageUpdate, validateInput, setValidateInput, } = props
+    const { formDataCreate, setFormDataCreate, previreImage, setPrevireImage, action, imageUpdate, validateInput, setValidateInput } = props
     const handleFileUpload = async (file: any) => {
         if (!file[0].name.match(/\.(jpg|jpeg|png|gif|webp)$/)) {
             toast.error("File bạn chọn không phải là file ảnh, Vui lòng chọn đúng file ảnh")
@@ -182,7 +182,7 @@ const CreateEmployeeInfomationDialog = (props: IPropCreateUser | any) => {
                             <Grid item xs={4}>
                                 <Input
                                     label={"Số căn cước công dân"}
-                                    type={"text"}
+                                    type={"number"}
                                     value={formDataCreate?.citizenIdentificationNumber}
                                     FuntionOnchange={(event) => handleOnChangeInputUserInfo("citizenIdentificationNumber", event.target.value, formDataCreate, setFormDataCreate, validateInput, setValidateInput)}
                                     Validate={validateInput.citizenIdentificationNumber}

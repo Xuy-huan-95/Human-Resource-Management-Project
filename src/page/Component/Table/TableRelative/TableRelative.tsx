@@ -13,16 +13,21 @@ import Empty from "../../../ShareComponent/Empty/Empty"
 import { useStyles } from "../../../ShareComponent/UseStylesTable/UseStylesTable"
 import React from "react";
 import { STATUS_PROFILE, NAME_GENDER, RELATIONSHIP } from "../../../ShareComponent/Constants/StatusIfomation"
+import Pagination from '../../../ShareComponent/Pagination/Pagination';
 
 
 interface ITableRelative {
     data: any
     handleSelectActionUpdate: (item: any) => Promise<void>
     handleDelete: (item: any) => Promise<void>
+    page: number
+    rowsPerPage: number
+    handleChangePage: (event: unknown, newPage: number) => void
+    handleChangeRowsPerPage: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 const TableRelative = (props: ITableRelative) => {
     const classes = useStyles();
-    const { data, handleSelectActionUpdate, handleDelete } = props
+    const { data, handleSelectActionUpdate, handleDelete, page, rowsPerPage, handleChangePage, handleChangeRowsPerPage } = props
 
     return (
         <div>
@@ -85,7 +90,7 @@ const TableRelative = (props: ITableRelative) => {
                                 </TableRow>
                             </TableHead>
                             {data?.data && data?.data?.length > 0 ?
-                                data?.data.map((item, index) => {
+                                data?.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((item, index) => {
                                     return (
                                         <TableBody key={`item-${index}`}>
                                             <TableRow hover role="checkbox" tabIndex={-1} >
@@ -137,6 +142,13 @@ const TableRelative = (props: ITableRelative) => {
                             }
 
                         </Table>
+                        <Pagination
+                            data={data}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            handleChangePage={handleChangePage}
+                            handleChangeRowsPerPage={handleChangeRowsPerPage}
+                        />
                     </TableContainer>
                 </Grid>
 

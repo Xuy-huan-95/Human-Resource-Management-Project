@@ -12,7 +12,7 @@ import RegistrationForms from "../../Form/Form"
 import { useAppDispatch, useAppSelector } from "../../../../redux/hook";
 import { GetResultProcess } from "../../../../redux/slice/process.slice"
 import { validateProcess } from "../../../InitData/InitData"
-import { validateModalProcess, validateInputProcess } from "../../../../validate/validate"
+import { validateModalProcess, validateInputProcess } from "../../../../validate/ValidateProcess/ValidateProcess"
 import Input from "../../../ShareComponent/Input/Input"
 import InputPositionSelecter from "../../../ShareComponent/Input/InputSelectet/InputPositionSelecter"
 import { ERROR_STATUS_EMPTY, ERROR_STATUS_SYNTAX, RESPONSE_STATUS_CODE } from "../../../ShareComponent/Constants/StatusCode"
@@ -95,7 +95,7 @@ const ModalProcess = () => {
     }
     const handleCancelUpdate = () => {
         setActionStateProcess("")
-        setDataProces({ ...dataProces, promotionDay: moment(new Date()).format("YYYY-MM-DD") })
+        setDataProces({ ...dataProces, newPosition: "", promotionDay: moment(new Date()).format("YYYY-MM-DD") })
         setValidate(validateProcess)
     }
     const handleShowhideModalDelete = (item) => {

@@ -32,6 +32,8 @@ const InfomationEmployee = (props: IInfomationEmployee) => {
     const [openDeleteExperience, setOpenDeleteExperience] = useState(false)
     const { data } = useGetExperieceByemployeeIdQuery(dataToSendLeader.id, { refetchOnMountOrArgChange: true })
 
+    console.log("dataUser", dataUser)
+
     const handleShowhideModalDeleteExperience = (value: any) => {
         setOpenDeleteExperience(!openDeleteExperience)
         setIdDeleteExperience(value.id)

@@ -5,7 +5,6 @@ import { IFamily } from "../../interface/Family.interface"
 import { ICreateSalary, ISalaryIncreate } from "../../interface/SalaryIncreate.interface"
 import { IProccess } from "../../interface/Proccess.interface"
 import { IProposal } from "../../interface/Proposal.interface"
-import moment from "moment"
 export const dataUpdateInistate: Omit<IUser, 'id'> | IUser = {
     name: "",
     code: "",
@@ -345,4 +344,5 @@ export const validateDataApprove: {
     time: "",
     need: ""
 }
+
 

@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
 import { useAppSelector } from "../../../redux/hook";
 import RegistrationForms from "../Form/Form"
 import ApproveActionModal from "../PendingApprove/ApproveDialog/ApproveDialog"
-import { validateEndForm } from "../../../validate/validate"
+import { validateEndForm } from "../../../validate/ValidateEndForm/ValidateEndForm"
 import ButtonExit from "../../ShareComponent/Button/ButtonExit"
 import ButtonSubmit from "../../ShareComponent/Button/ButtonSubmit"
 import ButtonCancel from "../../ShareComponent/Button/ButtonCancel"

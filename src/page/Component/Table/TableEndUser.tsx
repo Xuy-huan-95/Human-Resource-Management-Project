@@ -6,12 +6,10 @@ import Pagination from "../../ShareComponent/Pagination/Pagination"
 import TableShare from "../../ShareComponent/Table/TableEmployee"
 import SearchShare from "../../ShareComponent/Search/Search"
 import BreadcrumbsModal from "../../ShareComponent/Breadcrumbs/Breadcrumbs"
-
 const TableEnd = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [search, setSearch] = useState<string>("")
-
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };

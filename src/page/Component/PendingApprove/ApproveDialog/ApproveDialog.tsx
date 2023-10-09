@@ -14,7 +14,7 @@ import { useUpdateProcessMutation } from "../../../../redux/slice/Proccess/index
 import { useAppDispatch, useAppSelector } from "../../../../redux/hook";
 import { toast } from 'react-toastify';
 import { useUpdateLeaderMutation } from "../../../../redux/slice/Proposal/index"
-import { validateData } from "../../../../validate/validate"
+import { ValidateDataApprove } from "../../../../validate/ValidateDataApprove/ValidateDataApprove"
 import Input from '../../../ShareComponent/Input/Input';
 import { ERROR_STATUS_EMPTY, RESPONSE_STATUS_CODE } from "../../../ShareComponent/Constants/StatusCode"
 import { STATUS_PROFILE, STATUS_All } from "../../../ShareComponent/Constants/StatusIfomation"
@@ -50,7 +50,7 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
 
     const handleApproveUser = async () => {
         try {
-            let check = validateData(data, validateApproveData, setValidateApproveData, actionApprove)
+            let check = ValidateDataApprove(data, validateApproveData, setValidateApproveData, actionApprove)
             if (actionApprove == "User-Approve" && check == true) {
                 let dataUpdate = { ...dataUser, appointmentDate: data.time, submitProfileStatus: STATUS_PROFILE.THREE }
                 let result = await update(dataUpdate).unwrap()

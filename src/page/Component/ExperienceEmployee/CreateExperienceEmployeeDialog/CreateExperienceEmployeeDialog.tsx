@@ -14,7 +14,7 @@ import { RESPONSE_STATUS_CODE } from "../../../ShareComponent/Constants/StatusCo
 import ButtonSubmit from "../../../ShareComponent/Button/ButtonSubmit"
 import ButtonCancel from "../../../ShareComponent/Button/ButtonCancel"
 import { validateExperience } from "../../../InitData/InitData"
-import { validateDataExperience } from "../../../../validate/validate"
+import { validateDataExperience } from "../../../../validate/ValidateExperience/ValidateExperience"
 import Input from "../../../ShareComponent/Input/Input";
 import { ERROR_STATUS_EMPTY, ERROR_STATUS_SYNTAX } from "../../../ShareComponent/Constants/StatusCode"
 export interface Iprop {
@@ -42,33 +42,40 @@ const CreateExperienceEmployeeDialog = (props: Iprop) => {
 
 
     const handleCreateExperience = async () => {
-        let check = validateDataExperience(experience, initStateExperience, validate, setValidate)
-        if (check == true) {
-            let reuslt = await create({
-                employeeId: id,
-                data: [{ ...experience, leavingReason: "." }]
-            }).unwrap()
-            if (reuslt.code == RESPONSE_STATUS_CODE.SUCCESS) {
-                setExperience(initStateExperience)
-                toast.success("Bạn đã thêm kinh nghiệm mới thành công")
-                setValidate(validateExperience)
-                setOpen(false)
-            } else {
-                toast.error("Vui lòng kiểm tra lại thông tin trước khi lưu !!!")
+        try {
+            let check = validateDataExperience(experience, initStateExperience, validate, setValidate)
+            if (check == true) {
+                let reuslt = await create({
+                    employeeId: id,
+                    data: [{ ...experience, leavingReason: "." }]
+                }).unwrap()
+                if (reuslt.code == RESPONSE_STATUS_CODE.SUCCESS) {
+                    setExperience(initStateExperience)
+                    toast.success("Bạn đã thêm kinh nghiệm mới thành công")
+                    setValidate(validateExperience)
+                    setOpen(false)
+                } else {
+                    toast.error("Vui lòng kiểm tra lại thông tin trước khi lưu !!!")
+                }
             }
+        } catch (error) {
+            console.log(error)
         }
-
     }
 
     const handleUpdateExperience = async () => {
-        let check = validateDataExperience(experience, initStateExperience, validate, setValidate)
-        if (check == true) {
-            let reuslt = await update(experience as IExperience).unwrap()
-            if (reuslt.code == RESPONSE_STATUS_CODE.SUCCESS) {
-                toast.success("Bạn đã cập nhật kinh nghiệm thành công")
-                setOpen(false)
-                setValidate(validateExperience)
+        try {
+            let check = validateDataExperience(experience, initStateExperience, validate, setValidate)
+            if (check == true) {
+                let reuslt = await update(experience as IExperience).unwrap()
+                if (reuslt.code == RESPONSE_STATUS_CODE.SUCCESS) {
+                    toast.success("Bạn đã cập nhật kinh nghiệm thành công")
+                    setOpen(false)
+                    setValidate(validateExperience)
+                }
             }
+        } catch (error) {
+            console.log(error)
         }
     }
     useEffect(() => {

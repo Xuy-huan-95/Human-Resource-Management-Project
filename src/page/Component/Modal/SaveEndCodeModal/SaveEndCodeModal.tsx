@@ -14,7 +14,7 @@ import "./SaveEndCodeModal.scss"
 import Input from "../../../ShareComponent/Input/Input";
 import { validateSaveCode } from "../../../InitData/InitData"
 import { RESPONSE_STATUS_CODE, ERROR_STATUS_EMPTY } from "../../../ShareComponent/Constants/StatusCode"
-import { validateDataEndCode } from "../../../../validate/validate"
+import { validateDataEndCode } from "../../../../validate/ValidateDataEndCode/ValidateDataEndCode"
 import moment from "moment"
 interface Iprop {
     open: boolean,
@@ -102,7 +102,7 @@ const SaveEndCodeModal = (props: Iprop) => {
                                 <Grid item xs={12} lg={12}>
                                     <Input
                                         label={"Số lưu hồ sơ"}
-                                        type={"text"}
+                                        type={"number"}
                                         value={DataEnd?.numberSaved}
                                         FuntionOnchange={(event) => setDataEnd({ ...DataEnd, numberSaved: event.target.value })}
                                         error={validate.numberSaved}

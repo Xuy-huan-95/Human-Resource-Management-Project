@@ -11,7 +11,7 @@ import RegistrationForms from "../Form/Form"
 import { useCreateEmployeeMutation, useUpdateEmployeeMutation } from "../../../redux/slice/Employee"
 import { toast } from 'react-toastify';
 import { dataUpdateInistate, InitValidateState } from "../../InitData/InitData"
-import { validateUseInfo } from "../../../validate/validate"
+import { validateUseInfo } from "../../../validate/ValidateUseInfo/ValidateUseInfo"
 import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 import { GetResultData } from "../../../redux/slice/RegisterUser.slice"
 import TabsList from "../../ShareComponent/Tabslist/TabsList"
@@ -21,6 +21,7 @@ import ButtonExit from "../../ShareComponent/Button/ButtonExit"
 import ButtonSubmit from "../../ShareComponent/Button/ButtonSubmit"
 import ButtonCancel from "../../ShareComponent/Button/ButtonCancel"
 import { STATUS_All, STATUS_PROFILE } from "../../ShareComponent/Constants/StatusIfomation"
+import { IUser } from "../../../interface/Employee.interface";
 
 export interface Iprop {
     open: boolean,
@@ -42,19 +43,22 @@ const ModalCreatedUser = (props: Iprop) => {
     const [UpdateData] = useUpdateEmployeeMutation()
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-        setValue(newValue);
-
+        if (dataToSendLeader.id && newValue > 0 || newValue == 0) {
+            setValue(newValue);
+        } if (!dataToSendLeader.id && newValue > 0) {
+            toast.info("Bạn vui lòng tạo thông tin nhân viên trước khi tạo quan hệ gia đình và thông tin văn bằng")
+        }
     };
     const handleCreateUser = async () => {
         try {
-            let validateData = validateUseInfo(dataUpdateInistate, formDataCreate, validateInput, setValidateInput)
+            let check = validateUseInfo(dataUpdateInistate, formDataCreate, validateInput, setValidateInput)
 
-            if (created == 0 && validateData == true) {
+            if (created == 0 && check == true) {
                 let result = await CreateData(formDataCreate).unwrap()
                 if (Object.values(result)[0] === RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã thêm nhân viên mới thành công")
                     dispatch(GetResultData(Object.values(result)[2]))
-                    setFormDataCreate(Object.values(result)[2])
+                    setFormDataCreate(Object.values(result)[2] as IUser)
                     setOpenRegistration(!openRegistration)
                     setCreated(1)
                 }
@@ -62,16 +66,14 @@ const ModalCreatedUser = (props: Iprop) => {
             if (created == 1) {
                 await handleUpdateUser()
             }
-
         } catch (error) {
             console.log(error)
         }
-
     }
     const handleUpdateUser = async () => {
         try {
-            let validateData = validateUseInfo(dataUpdateInistate, formDataCreate, validateInput, setValidateInput)
-            if (validateData == true) {
+            let check = validateUseInfo(dataUpdateInistate, formDataCreate, validateInput, setValidateInput)
+            if (check == true) {
                 const data = { ...formDataCreate, dateOfBirth: new Date(formDataCreate.dateOfBirth), dateOfIssuanceCard: new Date(formDataCreate.dateOfBirth) }
                 let result = await UpdateData(data).unwrap()
                 if (Object.values(result)[0] == RESPONSE_STATUS_CODE.SUCCESS) {
@@ -104,6 +106,9 @@ const ModalCreatedUser = (props: Iprop) => {
         if (action === "Update") {
             setFormDataCreate(dataToSendLeader)
         }
+    }, [open])
+    useEffect(() => {
+        setValue(0)
     }, [open])
     return (
         <div >

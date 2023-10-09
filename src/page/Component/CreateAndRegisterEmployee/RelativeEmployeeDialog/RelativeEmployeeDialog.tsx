@@ -6,7 +6,7 @@ import { IFamily } from "../../../../interface/Family.interface"
 import { toast } from 'react-toastify';
 import moment from 'moment';
 import { initRelativeInfo, InitValidateRelativeInfo } from "../../../InitData/InitData"
-import { validateUseRelative, handleOnChangeInputUserRelative } from "../../../../validate/validate"
+import { validateUseRelative, handleOnChangeInputUserRelative } from "../../../../validate/ValidateUseRelative/ValidateUseRelative"
 import { useAppSelector } from "../../../../redux/hook";
 import ButtonSubmit from "../../../ShareComponent/Button/ButtonSubmit"
 import ButtonCancel from "../../../ShareComponent/Button/ButtonCancel"
@@ -25,23 +25,26 @@ const RelativeEmployeeDialog = () => {
     const { data } = useGetFamilyByemployeeIdQuery(dataToSendLeader.id, { refetchOnMountOrArgChange: true })
     const [Delete] = useDeleteFamilyMutation()
     const [Update] = useUpdateFamilyMutation()
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(3);
+
+    const handleChangePage = (event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
+    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setRowsPerPage(+event.target.value);
+        setPage(0);
+    };
 
     const handleCreateRelative = async () => {
         try {
             let check = validateUseRelative(initRelativeInfo, fammilyData, validateFammilyData, setValidateFammilyData)
-            if (!dataToSendLeader.id) {
-                toast.info("Vui lòng tạo thông tin nhân viên trước khi qua tạo thông tin quan hệ gia đình")
-                return;
-            }
-
-            if (dataToSendLeader.id > 0 && check === true) {
+            if (check === true) {
                 let result = await create({
                     employeeId: dataToSendLeader.id,
                     data: [fammilyData]
                 })
                 if (Object.values(result)[0].code == RESPONSE_STATUS_CODE.SUCCESS) {
-                    console.log("Object.values(result)[0]", Object.values(result)[0])
-                    console.log("dataToSendLeader", dataToSendLeader)
                     toast.success("bạn đã thêm thành công quan hệ gia đình")
                     setFammilyData(initRelativeInfo)
                     setValidateFammilyData(InitValidateRelativeInfo)
@@ -49,6 +52,9 @@ const RelativeEmployeeDialog = () => {
                 }
                 if (Object.values(result)[0].code == RESPONSE_STATUS_CODE.WRONGEMAIL) {
                     setValidateFammilyData({ ...InitValidateRelativeInfo, email: ERROR_CODE.SYNTAX })
+                }
+                if (Object.values(result)[0].code == RESPONSE_STATUS_CODE.WRONGCITIZENIDENTIFICATIONNUMBER) {
+                    setValidateFammilyData({ ...InitValidateRelativeInfo, citizenIdentificationNumber: ERROR_CODE.SYNTAX })
                 }
             }
         } catch (error) {
@@ -158,7 +164,7 @@ const RelativeEmployeeDialog = () => {
                         <Grid item xs={3}>
                             <Input
                                 label={"Số điện thoại"}
-                                type={"text"}
+                                type={"number"}
                                 value={fammilyData.phoneNumber}
                                 FuntionOnchange={(event) => handleOnChangeInputUserRelative("phoneNumber", event.target.value, fammilyData, setFammilyData, validateFammilyData, setValidateFammilyData)}
                                 Validate={validateFammilyData.phoneNumber}
@@ -169,7 +175,7 @@ const RelativeEmployeeDialog = () => {
                         <Grid item xs={3}>
                             <Input
                                 label={"Số căn cước công dân"}
-                                type={"text"}
+                                type={"number"}
                                 value={fammilyData.citizenIdentificationNumber}
                                 FuntionOnchange={(event) => handleOnChangeInputUserRelative("citizenIdentificationNumber", event.target.value, fammilyData, setFammilyData, validateFammilyData, setValidateFammilyData)}
                                 Validate={validateFammilyData.citizenIdentificationNumber}
@@ -210,6 +216,10 @@ const RelativeEmployeeDialog = () => {
                         data={data}
                         handleSelectActionUpdate={handleSelectActionUpdate}
                         handleDelete={handleDelete}
+                        page={page}
+                        rowsPerPage={rowsPerPage}
+                        handleChangePage={handleChangePage}
+                        handleChangeRowsPerPage={handleChangeRowsPerPage}
                     />
                 </div>
             </Box >
