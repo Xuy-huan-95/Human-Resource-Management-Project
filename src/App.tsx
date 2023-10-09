@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { refreshUser } from "./redux/slice/login.slice"
 import { GetPermisson } from "./redux/slice/CheckPermission.slice"
 import { useAppDispatch, useAppSelector } from "./redux/hook";
-import Routes from "./routes"
+import Routes from "./Routes"
 
 const App = () => {
   const dispatch = useAppDispatch();
