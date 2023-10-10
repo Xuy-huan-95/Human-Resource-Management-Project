@@ -246,6 +246,7 @@ const ProposalDialog = () => {
 
                     </>
                 }
+                <br />
                 <div>
                     <TableProposal
                         data={data}
