@@ -18,7 +18,7 @@ import { ERROR_STATUS_EMPTY, ERROR_STATUS_SYNTAX, RESPONSE_STATUS_CODE } from ".
 import TableSalaryIncrease from "../../Table/TableSalaryIncrease/TableSalaryIncrease"
 import ButtonSubmit from "../../../ShareComponent/Button/ButtonSubmit"
 import ButtonCancel from "../../../ShareComponent/Button/ButtonCancel"
-import { STATUS_PROFILE } from "../../../ShareComponent/Constants/StatusIfomation"
+import { STATUS_PROFILE, STATUS_All } from "../../../ShareComponent/Constants/StatusIfomation"
 
 const ModalSalaryIncrease = () => {
     const dispatch = useAppDispatch()
@@ -27,7 +27,7 @@ const ModalSalaryIncrease = () => {
     const [validateSalaryIncrease, setValidateSalaryIncrease] = useState(validatecreateSalary)
     const [create] = useCreateSalaryMutation()
     const [update] = useUpdateSalaryMutation()
-    const { data } = useGetSalarybyEmployeeIdQuery(dataUser.id)
+    const { data } = useGetSalarybyEmployeeIdQuery(dataUser.id, { refetchOnMountOrArgChange: true })
     const [actionState, setActionState] = useState<string>("")
     const [showhideDeleteSalaryIncreaseModal, setShowhideDeleteSalaryIncreaseModal] = useState<boolean>(false)
     const [showhideRegisterForm, setShowhideRegisterForm] = useState<boolean>(false)
@@ -62,7 +62,6 @@ const ModalSalaryIncrease = () => {
                 }
             }
         } catch (error) {
-            console.log(error)
         }
     }
     const handleEdit = (item: any) => {
@@ -93,12 +92,9 @@ const ModalSalaryIncrease = () => {
                     }
                 }
             }
-        } catch (result) {
-            console.log(result)
+        } catch (error) {
         }
     }
-
-
     const handleDelete = () => {
         setDataSalaryIncrease({ ...dataSalaryIncrease, reason: "", oldSalary: "", newSalary: "", startDate: moment(new Date()).format("YYYY-MM-DD") })
         setActionState("")
@@ -120,10 +116,14 @@ const ModalSalaryIncrease = () => {
         setDataSalaryIncrease({ ...dataSalaryIncrease, startDate: moment(new Date()).format("YYYY-MM-DD") })
     }, [open])
 
+
+    // useEffect(() => {
+    //     console.log("data", data)
+    // }, [data])
     return (
         <div className="height">
             <Box sx={{ flexGrow: 1 }}>
-                {dataUser.submitProfileStatus !== STATUS_PROFILE.SIX &&
+                {dataUser.submitProfileStatus !== STATUS_PROFILE.SIX && data?.data.some((item) => item.salaryIncreaseStatus == STATUS_All.TWO) == false &&
                     <>
                         <Grid item lg={24} sm={24}  >
                             <Grid container item spacing={2}>
@@ -191,6 +191,68 @@ const ModalSalaryIncrease = () => {
                                 handleCancel={handleDelete}
                             />
                         </div>
+                    </>
+                }
+                {dataUser.submitProfileStatus !== STATUS_PROFILE.SIX && data?.data.some((item) => item.salaryIncreaseStatus == STATUS_All.TWO) == true &&
+                    <>
+                        <Grid item lg={24} sm={24}  >
+                            <Grid container item spacing={2}>
+                                <Grid item xs={4}>
+                                    <Input
+                                        label={"Lương cũ"}
+                                        type={"number"}
+                                        value={dataSalaryIncrease.oldSalary}
+                                        FuntionOnchange={(event) => ValidateInputSalaryIncreate("oldSalary", event.target.value, dataSalaryIncrease, setDataSalaryIncrease, validateSalaryIncrease, setValidateSalaryIncrease)}
+                                        Validate={validateSalaryIncrease.oldSalary}
+                                        ErrorEmpty={ERROR_STATUS_EMPTY.TWENTY}
+                                        ErrorSyntax={ERROR_STATUS_SYNTAX.TWENTY}
+                                        valueDisable={true}
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Input
+                                        label={"Lương mới"}
+                                        type={"number"}
+                                        value={dataSalaryIncrease.newSalary}
+                                        FuntionOnchange={(event) => ValidateInputSalaryIncreate("newSalary", event.target.value, dataSalaryIncrease, setDataSalaryIncrease, validateSalaryIncrease, setValidateSalaryIncrease)}
+                                        Validate={validateSalaryIncrease.newSalary}
+                                        ErrorEmpty={ERROR_STATUS_EMPTY.TWENTYONE}
+                                        ErrorSyntax={ERROR_STATUS_SYNTAX.TWENTYONE}
+                                        valueDisable={true}
+
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Input
+                                        label={"Ngày hiệu lực"}
+                                        type={"date"}
+                                        value={dataSalaryIncrease.startDate}
+                                        FuntionOnchange={(event) => ValidateInputSalaryIncreate("startDate", event.target.value, dataSalaryIncrease, setDataSalaryIncrease, validateSalaryIncrease, setValidateSalaryIncrease)}
+                                        Validate={validateSalaryIncrease.startDate && validateSalaryIncrease.startDate}
+                                        ErrorEmpty={ERROR_STATUS_EMPTY.TWENTYTWO}
+                                        ErrorSyntax={ERROR_STATUS_SYNTAX.TWENTYTWO}
+                                        valueDisable={true}
+
+                                    />
+                                </Grid>
+                            </Grid>
+                            <br />
+                            <Grid item xs={24}>
+                                <Input
+                                    label={"Lý do tăng lương"}
+                                    type={"text"}
+                                    value={dataSalaryIncrease.reason}
+                                    FuntionOnchange={(event) => ValidateInputSalaryIncreate("reason", event.target.value, dataSalaryIncrease, setDataSalaryIncrease, validateSalaryIncrease, setValidateSalaryIncrease)}
+                                    Validate={validateSalaryIncrease.reason}
+                                    ErrorEmpty={ERROR_STATUS_EMPTY.TWENTYTHREE}
+                                    valueDisable={true}
+
+                                />
+                            </Grid>
+
+                        </Grid>
+                        <br />
+
                     </>
                 }
                 <div>

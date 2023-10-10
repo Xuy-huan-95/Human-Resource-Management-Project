@@ -14,9 +14,11 @@ interface IInput {
     sx?: string
     multiline?: any
     defaultValue: any
+    valueDisable?: boolean
+    OtherSyntax?: string
 }
 const Input = (Props: IInput | any) => {
-    const { label, value, type, FuntionOnchange, Validate, ErrorEmpty, ErrorSyntax, sx, defaultValue } = Props
+    const { label, value, type, FuntionOnchange, Validate, ErrorEmpty, ErrorSyntax, sx, defaultValue, valueDisable, OtherSyntax } = Props
     return (
         <>
             {label == "Nội dung công việc" || label == "Vui lòng nhập Kỹ năng" || label == "Vui lòng nhập hoạt động" || label == "Vui lòng nhập hiểu biết" ?
@@ -32,9 +34,10 @@ const Input = (Props: IInput | any) => {
                     size='small'
                     sx={sx}
                     error={Validate === ERROR_CODE.EMPTY || Validate === ERROR_CODE.SYNTAX}
-                    helperText={Validate === ERROR_CODE.EMPTY && ErrorEmpty || Validate === ERROR_CODE.SYNTAX && ErrorSyntax}
+                    helperText={Validate === ERROR_CODE.EMPTY && ErrorEmpty || Validate === ERROR_CODE.SYNTAX && ErrorSyntax || Validate === ERROR_CODE.OTHER && OtherSyntax}
                     maxRows={5}
                     multiline
+                    disabled={valueDisable ? valueDisable : false}
 
                 />
                 :
@@ -50,8 +53,10 @@ const Input = (Props: IInput | any) => {
                     sx={sx}
                     error={Validate === ERROR_CODE.EMPTY || Validate === ERROR_CODE.SYNTAX}
                     helperText={Validate === ERROR_CODE.EMPTY && ErrorEmpty || Validate === ERROR_CODE.SYNTAX && ErrorSyntax}
+                    disabled={valueDisable ? valueDisable : false}
                 />
             }
+
 
         </>
     )

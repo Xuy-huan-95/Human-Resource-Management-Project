@@ -16,8 +16,18 @@ export const validateCertificate = (InitCertificateData, createCertificateData, 
         setValidateCertificateData({ ...validateCertificateData, certificateName: ERROR_CODE.EMPTY, })
         return false
     }
-
+    if (createCertificateData["certificateName"].length > 50) {
+        setValidateCertificateData({ ...validateCertificateData, certificateName: ERROR_CODE.EMPTY, })
+        return false
+    }
     if (!createCertificateData["field"]) {
+        setValidateCertificateData({ ...validateCertificateData, field: ERROR_CODE.EMPTY, })
+        return false
+    }
+    if (createCertificateData["field"].length > 0) {
+        setValidateCertificateData({ ...validateCertificateData, field: ERROR_CODE.EMPTY, })
+        return false
+    } if (createCertificateData["field"].length > 255) {
         setValidateCertificateData({ ...validateCertificateData, field: ERROR_CODE.EMPTY, })
         return false
     }
@@ -34,6 +44,14 @@ export const validateCertificate = (InitCertificateData, createCertificateData, 
         setValidateCertificateData({ ...validateCertificateData, content: ERROR_CODE.EMPTY, })
         return false
     }
+    if (createCertificateData["content"].length > 255) {
+        setValidateCertificateData({ ...validateCertificateData, content: ERROR_CODE.EMPTY, })
+        return false
+    }
+    if (createCertificateData["content"].length == 255) {
+        setValidateCertificateData({ ...validateCertificateData, content: ERROR_CODE.EMPTY, })
+        return false
+    }
     return check
 }
 
@@ -42,11 +60,13 @@ export const handleOnChangeInputCertificateInfo = (name: string, value: any, cre
         setCreateCertificateData({ ...createCertificateData, certificateName: value })
         if (!value) setValidateCertificateData({ ...validateCertificateData, certificateName: "" })
         if (value) setValidateCertificateData({ ...validateCertificateData, certificateName: "" })
+        if (value.length > 50) setValidateCertificateData({ ...validateCertificateData, certificateName: ERROR_CODE.EMPTY })
     }
     if (name == "field") {
         setCreateCertificateData({ ...createCertificateData, field: value })
         if (!value) setValidateCertificateData({ ...validateCertificateData, field: "" })
         if (value) setValidateCertificateData({ ...validateCertificateData, field: "" })
+        if (value.length > 255) setValidateCertificateData({ ...validateCertificateData, field: ERROR_CODE.EMPTY })
     }
     if (name == "issueDate") {
         setCreateCertificateData({ ...createCertificateData, issueDate: value })
@@ -58,5 +78,6 @@ export const handleOnChangeInputCertificateInfo = (name: string, value: any, cre
         setCreateCertificateData({ ...createCertificateData, content: value })
         if (!value) setValidateCertificateData({ ...validateCertificateData, content: "" })
         if (value) setValidateCertificateData({ ...validateCertificateData, content: "" })
+        if (value.length > 255) setValidateCertificateData({ ...validateCertificateData, content: ERROR_CODE.EMPTY })
     }
 }

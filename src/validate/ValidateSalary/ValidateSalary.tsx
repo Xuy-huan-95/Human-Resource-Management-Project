@@ -16,6 +16,10 @@ export const ValidateDataIncreateSalary = (dataSalaryIncrease, validateSalaryInc
         setValidateSalaryIncrease({ ...validateSalaryIncrease, reason: ERROR_CODE.EMPTY })
         return false
     }
+    if (dataSalaryIncrease["reason"].length > 255) {
+        setValidateSalaryIncrease({ ...validateSalaryIncrease, reason: ERROR_CODE.EMPTY })
+        return false
+    }
     if (!dataSalaryIncrease["oldSalary"]) {
         setValidateSalaryIncrease({ ...validateSalaryIncrease, oldSalary: ERROR_CODE.EMPTY })
         return false
@@ -106,6 +110,6 @@ export const ValidateInputSalaryIncreate = (name: string, value: any, dataSalary
         setDataSalaryIncrease({ ...dataSalaryIncrease, reason: value })
         if (!value) setValidateSalaryIncrease({ ...validateSalaryIncrease, reason: "" })
         if (value) setValidateSalaryIncrease({ ...validateSalaryIncrease, reason: "" })
-
+        if (value.length > 255) setValidateSalaryIncrease({ ...validateSalaryIncrease, reason: ERROR_CODE.EMPTY })
     }
 }

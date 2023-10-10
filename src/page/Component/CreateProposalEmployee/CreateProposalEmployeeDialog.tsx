@@ -30,7 +30,6 @@ export interface Iprop {
     open: boolean,
     setOpen: any
 }
-
 const ModalUpdatedevelopments = (props: Iprop | any) => {
     const dataUser = useAppSelector((state) => state.registerUser.userInfomation)
     const { open, setOpen } = props
@@ -70,12 +69,12 @@ const ModalUpdatedevelopments = (props: Iprop | any) => {
                         <Grid container spacing={2} columns={20} className='gird-all' >
                             <Grid item lg={5} sm={20} className="left-modal" >
                                 <Grid container spacing={2} columns={12}  >
-                                    <Grid item lg={12} sm={6} >
+                                    <Grid item lg={24} sm={6} >
                                         <div className='icon-content'>
                                             <Avatar
                                                 alt="Remy Sharp"
                                                 src={dataUser.image}
-                                                sx={{ width: 250, height: 250, marginBottom: "20px" }}
+                                                className="Avater_Proposal"
                                             />
                                         </div>
                                         <div className="name-user">
@@ -83,7 +82,7 @@ const ModalUpdatedevelopments = (props: Iprop | any) => {
 
                                         </div>
                                     </Grid>
-                                    <Grid item lg={12} sm={6} className="spacing " >
+                                    <Grid item lg={24} sm={6} className="spacing " >
                                         <div className='user-infomation'>
                                             <div className="container">
                                                 <div className="item">

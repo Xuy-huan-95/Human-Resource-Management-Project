@@ -15,7 +15,7 @@ const Access = (props: IAccess) => {
     const { search } = props
     const dispatch = useAppDispatch()
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
     const [openRegisterForm, setOpenRegisterForm] = useState<boolean>(false)
     const { data, isLoading } = useGetCreateUserQuery({ pageIndex: page + 1, pageSize: rowsPerPage, keyword: search, listStatus: "2" })
     const [option, setOption] = useState("")

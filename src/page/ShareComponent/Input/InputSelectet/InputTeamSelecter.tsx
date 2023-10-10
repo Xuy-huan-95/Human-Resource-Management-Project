@@ -36,8 +36,11 @@ const InputTeamSelecter = (Props: IInputTeamSelecter | any) => {
                 <MenuItem value={3} >
                     Mobile
                 </MenuItem>
-                <MenuItem value={3} >
+                <MenuItem value={4} >
                     Tester
+                </MenuItem>
+                <MenuItem value={5} >
+                    NHÂN VIÊN KINH DOANH
                 </MenuItem>
             </TextField>
         </>

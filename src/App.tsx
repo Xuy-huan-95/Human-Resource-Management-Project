@@ -20,6 +20,7 @@ const App = () => {
     dispatch(GetPermisson(Permission))
 
   }, [])
+
   return (
     <>
       <RouterProvider router={Routes} />

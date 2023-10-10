@@ -21,14 +21,13 @@
       .infomation{
         display: flex;
         flex-direction: column;
-        margin-top: 28px;
+        margin-top: 33px;
         .email{
             display: flex;
-            margin-right: 130px;
+            margin-right: 99px;
             gap: 12px;
             font-size: 15px;
             .icon{
-                margin-left: -5px;
                 svg{
                     color: #000;
                 }
@@ -36,7 +35,7 @@
         }
         .phone{
             display: flex;
-            margin-left: 80px;
+            margin-left: 81px;
             margin-top: 9px;
             gap: 13px;
             font-size: 15px;
@@ -50,20 +49,20 @@
       .Skill{
         display: flex;
         flex-direction: column;
-        margin-top: 45px;
+        margin-top: 51px;
         .Skill-title{
             text-transform: uppercase;
             font-weight: 600;
             letter-spacing: .1px;
             font-size: 19px;
-            margin-left: 39px;
+            margin-left: 40px;
         }
         .content{
             display: flex;
             flex-direction: column;
             width: 350px;
             margin-left: 43px;
-            margin-top: 8px;
+            margin-top: 4px;
 
             .content-item{
                 display: flex;
@@ -75,14 +74,14 @@
                 flex-direction: column;
                 .container{
                     display: flex;
-                    align-items: flex-end;
+                    align-items: center;
                     gap: 11px;
                     .text{
                         margin-top: 5px;
+                        width: 100%;
                     }
                     .icon{
-                        margin-bottom: 1px;
-                        margin-left: 6px;
+                        margin-left: 7px;
                         svg {
                             font-size: 7px;
                             color: black;
@@ -94,7 +93,7 @@
         }
       }
       .English{
-        margin-top: 30px;
+        margin-top: 28px;
         .English-title{
             text-transform: uppercase;
             font-weight: 600;
@@ -105,13 +104,16 @@
         .english-item {
             display: flex;
             margin: 20px 0 0 40px;    
-            font-size: 15px;    
+            font-size: 16px;    
             gap: 67px;  
+            .english-item_title{
+             margin-left: 1px;
+            }
             .icon{
                 span {
                     width: 9px;
                     height: 9px;
-                    margin-left: 28px;
+                    margin-left: 25px;
                     display: inline-block;
                     background-color: #000;
                     -webkit-transform: rotate(-45deg);
@@ -127,13 +129,13 @@
         .china-item {
             display: flex;
             margin: 14px 0 0 40px;    
-            font-size: 15px;    
+            font-size: 16px;    
             gap: 55px;  
             .icon{
                 span {
                     width: 9px;
                     height: 9px;
-                    margin-left: 28px;
+                    margin-left: 25px;
                     display: inline-block;
                     background-color: #000;
                     -webkit-transform: rotate(-45deg);
@@ -145,14 +147,14 @@
                         background-color: #929292;
 
                     }
-                }
-               
-            }
+               }
+             }
         }
 
        
       }
       .Computer{
+        margin-left: 2px;
         .computer-item-title{
             text-transform: uppercase;
             font-weight: 600;
@@ -162,7 +164,7 @@
         }
         .Work-item{
             display: flex;
-            margin-left: 38px;
+            margin-left: 40px;
             margin-top: 23px;
             font-size: 15px;
             gap: 99px;  
@@ -171,13 +173,13 @@
                 span {
                     width: 9px;
                     height: 9px;
-                    margin-left: 28px;
+                    margin-left: 27px;
                     display: inline-block;
                     background-color: #000;
                     -webkit-transform: rotate(-45deg);
                     transform: rotate(-45deg);
                     &:nth-child(1){
-                        margin-left: 39px;
+                        margin-left: 40px;
                     }
                 }
             }
@@ -185,7 +187,7 @@
         .Excel-item{
             display: flex;
             margin-left: 38px;
-            margin-top: 16px;
+            margin-top: 14px;
             font-size: 15px;
             gap: 99px;  
 
@@ -193,13 +195,13 @@
                 span {
                     width: 9px;
                     height: 9px;
-                    margin-left: 28px;
+                    margin-left: 27px;
                     display: inline-block;
                     background-color: #000;
                     -webkit-transform: rotate(-45deg);
                     transform: rotate(-45deg);
                     &:nth-child(1){
-                        margin-left: 39px;
+                        margin-left: 41px;
                     }
                     &:nth-child(3){
                         background-color: #929292;
@@ -210,7 +212,7 @@
         }
      }
      .process{
-        margin: 30px 0 0 37px;
+        margin: 30px 0 0 40px;
         .process-tittle{
             text-transform: uppercase;
             font-weight: 600;
@@ -273,7 +275,7 @@
     }
     .right-content{
         width: 61%;
-        margin-top: 49px;
+        margin-top: 55px;
 
         .User-name{
             display: flex;
@@ -282,15 +284,17 @@
             padding: 0 32px;
             border-left: 1px solid black;
           .User-name-title{
-                font-size: 40px;
-                // font-weight: 600;
-                letter-spacing: 2.2px;
+                font-size: 41px;
+                letter-spacing: 4.5px;
                 margin-left: 5px;
                     }
             .team{
                 font-size: 22px;
                 font-weight: 600;
                 margin-top: -1px;
+                margin-left: 3px;
+                letter-spacing: 3px;
+
           }
 
         }
@@ -302,9 +306,10 @@
             .Contact-item{
                 display: flex;
                 align-items: center;
-                margin-top: 7px;
+                margin-top: 8px;
                 position: relative;
                    .icon{
+                    margin-top: 3px;
                     position: absolute;
                     left: -18px;
                     width: 39px;
@@ -316,7 +321,20 @@
                     background-color: #929292;
                   
                    }
+                   .icon_two{
+                    position: absolute;
+                    left: -18px;
+                    width: 39px;
+                    height: 39px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background-color: #929292;
+                    margin: 5px 0;
+                   }
                    .text{
+                    
                     margin-left: 36px;
                     font-size: 14px;
                     margin-top: 3px;
@@ -327,7 +345,7 @@
         .Career-Objective{
             display: flex;
             flex-direction: column;
-            margin: 60px 0 46px 0;
+            margin: 58px 0 46px 0;
             padding: 0 36px;
             border-left: 1px solid black;
             .Career-Objective-title{
@@ -373,9 +391,10 @@
             display: flex;
             flex-direction: column;
             margin: 23px 0;
-            padding: 0 20px;
+            padding: 0 24px;
             border-left: 1px solid black;
             .Certificate-title{
+                margin-left: 10px !important;
                 text-transform: uppercase;
                 font-weight: 600;
                 letter-spacing: .1px;

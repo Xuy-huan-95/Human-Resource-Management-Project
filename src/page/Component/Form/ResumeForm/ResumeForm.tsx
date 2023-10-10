@@ -17,7 +17,7 @@ const ResumeForm = () => {
         <div className='resume-container'>
             <div className='resume-content'>
                 <Grid container spacing={2} className='resume-body-header'>
-                    <Grid item xs={3} md={6} className='image-user'>
+                    <Grid item xs={6} className='image-user'>
                         <div className='image'>
                             <Avatar
                                 alt="Remy Sharp"
@@ -26,7 +26,7 @@ const ResumeForm = () => {
                             />
                         </div>
                     </Grid>
-                    <Grid item xs={6} md={6} className='title'>
+                    <Grid item xs={6} className='title'>
                         <div className='title-one'>
                             <div> Cộng hòa xã hội chủ nghĩa Việt Nam</div>
                             <div> Độc lập - Tự do - Hạnh phúc</div>

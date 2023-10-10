@@ -51,7 +51,6 @@ export const ValidateDataApprove = (data, validateApproveData, setValidateApprov
         && actionApprove !== "Process-Approve" && actionApprove !== "proposal-Approve" && !data['need']) {
         setValidateApproveData({ ...validateApproveData, need: ERROR_CODE.EMPTY })
         return false
-
     }
     return check
 }

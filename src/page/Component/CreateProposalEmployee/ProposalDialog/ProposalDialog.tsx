@@ -25,7 +25,7 @@ const ProposalDialog = () => {
     const [dataProposal, setDataProposal] = useState(initProposal)
     const dataUser = useAppSelector((state) => state.registerUser.userInfomation)
     const [Create] = useAddProposalByEmpMutation()
-    const { data } = useGetProposalByEmpQuery(dataUser.id)
+    const { data } = useGetProposalByEmpQuery(dataUser.id, { refetchOnMountOrArgChange: true })
     const [update] = useUpdateLeaderMutation()
     const [actionProposal, setActionProposal] = useState<string>("")
     const [openModalDelete, setOpenModalDelete] = useState<boolean>(false)
@@ -63,11 +63,8 @@ const ProposalDialog = () => {
                 }
             }
         } catch (error) {
-            // console.log(error.status)
         }
     }
-
-
     const handleShowhideRegister = (item) => {
         setOpenRegisterForm(!openRegisterForm)
         dispatch(GetResultProposal(item))
@@ -86,7 +83,6 @@ const ProposalDialog = () => {
         })
         setActionProposal("Update")
     }
-
     const handleUpdateProposal = async () => {
         try {
             let check = validateProposalModal(dataProposal, initProposal, validate, setValidate)
@@ -121,7 +117,7 @@ const ProposalDialog = () => {
     return (
         <div className="height">
             <Box >
-                {dataUser.submitProfileStatus !== STATUS_PROFILE.SIX &&
+                {dataUser.submitProfileStatus !== STATUS_PROFILE.SIX && data?.data.some((item) => item.proposalStatus == STATUS_PROFILE.TWO) == false &&
                     <>
                         <Grid item lg={24} sm={24}  >
                             <Grid container item spacing={2}>
@@ -136,7 +132,7 @@ const ProposalDialog = () => {
                                         ErrorSyntax={ERROR_STATUS_SYNTAX.TWENTYFIVE}
                                     />
                                 </Grid>
-                                <Grid item sm={6} >
+                                <Grid item xs={6} >
                                     <InputTypeProposalselect
                                         label={"Loại đề xuất"}
                                         value={dataProposal.type}
@@ -188,6 +184,66 @@ const ProposalDialog = () => {
                                 handleCancel={handleDeleteInput}
                             />
                         </div>
+                    </>
+                }
+                {dataUser.submitProfileStatus !== STATUS_PROFILE.SIX && data?.data.some((item) => item.proposalStatus == STATUS_PROFILE.TWO) == true &&
+                    <>
+                        <Grid item lg={24} sm={24}  >
+                            <Grid container item spacing={2}>
+                                <Grid item xs={6}>
+                                    <Input
+                                        label={"Ngày hiệu lực"}
+                                        type={"date"}
+                                        value={dataProposal.proposalDate ? dataProposal.proposalDate : moment(new Date).format("YYYY-MM-DD")}
+                                        FuntionOnchange={(event) => ValidateOnChangeInputProposal("proposalDate", event.target.value, dataProposal, setDataProposal, validate, setValidate)}
+                                        Validate={validate.proposalDate}
+                                        ErrorEmpty={ERROR_STATUS_EMPTY.TWENTYTWO}
+                                        ErrorSyntax={ERROR_STATUS_SYNTAX.TWENTYFIVE}
+                                        valueDisable={true}
+                                    />
+                                </Grid>
+                                <Grid item sm={6} >
+                                    <InputTypeProposalselect
+                                        label={"Loại đề xuất"}
+                                        value={dataProposal.type}
+                                        FuntionOnchange={(event) => ValidateOnChangeInputProposal("type", event.target.value, dataProposal, setDataProposal, validate, setValidate)}
+                                        Validate={validate.type}
+                                        ErrorEmpty={ERROR_STATUS_EMPTY.TWENTYSIX}
+                                        valueDiable={true}
+
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <br />
+                        <Grid item lg={24} sm={24}  >
+                            <Grid container item spacing={2}>
+                                <Grid item xs={6}>
+                                    <Input
+                                        label={"Nội dung"}
+                                        type={"text"}
+                                        value={dataProposal.content}
+                                        FuntionOnchange={(event) => ValidateOnChangeInputProposal("content", event.target.value, dataProposal, setDataProposal, validate, setValidate)}
+                                        Validate={validate.content}
+                                        ErrorEmpty={ERROR_STATUS_EMPTY.TWENTYSEVEN}
+                                        valueDisable={true}
+
+                                    />
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <Input
+                                        label={"Mô tả chi tiết"}
+                                        type={"text"}
+                                        value={dataProposal.detailedDescription}
+                                        FuntionOnchange={(event) => ValidateOnChangeInputProposal("detailedDescription", event.target.value, dataProposal, setDataProposal, validate, setValidate)}
+                                        Validate={validate.detailedDescription}
+                                        ErrorEmpty={ERROR_STATUS_EMPTY.TWENTYEIGHT}
+                                        valueDisable={true}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+
                     </>
                 }
                 <div>

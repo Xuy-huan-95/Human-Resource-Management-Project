@@ -50,7 +50,6 @@ const EmployeeCertificateDialog = () => {
                 }
                 else {
                     toast.error("Vui lòng kiểm tra lại thông tin trước khi thêm mới")
-
                 }
             }
         } catch (error) {
@@ -97,6 +96,8 @@ const EmployeeCertificateDialog = () => {
         setValidateCertificateData(InitValidateCertificate)
         setAcitonCertificate("")
     }
+
+
     return (
         <div>
             <Box sx={{ flexGrow: 1 }}>

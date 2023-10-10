@@ -74,7 +74,9 @@ export const NAME_TEAM = {
 	ONE: "Reactjs",
 	TWO: "Java",
 	THREE: "Mobile",
-	FOUR: "Tester"
+	FOUR: "Tester",
+	FIVE: "NHÂN VIÊN KINH DOANH"
+
 }
 
 export const NAME_STATUS_PROFILE = {

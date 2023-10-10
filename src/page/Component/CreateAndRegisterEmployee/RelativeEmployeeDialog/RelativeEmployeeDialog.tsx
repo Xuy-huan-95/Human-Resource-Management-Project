@@ -56,6 +56,9 @@ const RelativeEmployeeDialog = () => {
                 if (Object.values(result)[0].code == RESPONSE_STATUS_CODE.WRONGCITIZENIDENTIFICATIONNUMBER) {
                     setValidateFammilyData({ ...InitValidateRelativeInfo, citizenIdentificationNumber: ERROR_CODE.SYNTAX })
                 }
+                if (Object.values(result)[0].code == RESPONSE_STATUS_CODE.WRONGPHONE) {
+                    setValidateFammilyData({ ...InitValidateRelativeInfo, phoneNumber: ERROR_CODE.SYNTAX })
+                }
             }
         } catch (error) {
             console.log(error)

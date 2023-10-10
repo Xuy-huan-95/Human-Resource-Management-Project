@@ -14,7 +14,7 @@
         justify-content: space-between;
         span {
             &:nth-child(2){
-                margin-right: 10%;
+                margin-right: 4%;
                 font-size: 20px;
                 font-weight: 700;
                 color: #3da420;
@@ -31,7 +31,7 @@
         }
     }
     .Form-content{
-        margin-left: 220px;
+        margin-left: 230px;
         overflow: auto;
         
       .wrapper{
@@ -49,3 +49,7 @@
 // .width {
 //     width: 1300px;
 // }
+.tablist-body{
+    overflow: auto !important;
+
+}

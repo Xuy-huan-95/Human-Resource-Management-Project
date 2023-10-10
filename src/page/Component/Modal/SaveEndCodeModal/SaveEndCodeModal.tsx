@@ -102,7 +102,7 @@ const SaveEndCodeModal = (props: Iprop) => {
                                 <Grid item xs={12} lg={12}>
                                     <Input
                                         label={"Số lưu hồ sơ"}
-                                        type={"text"}
+                                        type={"number"}
                                         value={DataEnd?.numberSaved}
                                         FuntionOnchange={(event) => setDataEnd({ ...DataEnd, numberSaved: event.target.value })}
                                         error={validate.numberSaved}

@@ -42,14 +42,14 @@ const ExperienceEmployee = (props: IExperienceEmployee) => {
                                     <div className='dot-icon'>
                                         <FiberManualRecordIcon />
                                     </div>
-                                    <div className='NameCompany'>{item.companyName}</div>
+                                    <div className='NameCompany' title={item.companyName}>{item.companyName}</div>
                                 </div>
                                 <div className="position">
                                     <div className='detail-position'>{item.companyAddress} </div>
 
                                 </div>
-                                {dataToSendLeader.submitProfileStatus !== "2"
-                                    &&
+                                {dataToSendLeader.submitProfileStatus == STATUS_PROFILE.ONE || dataToSendLeader.submitProfileStatus == STATUS_PROFILE.FOUR || dataToSendLeader.submitProfileStatus == STATUS_PROFILE.FIVE
+                                    ?
                                     <div className='edit-delete'>
                                         <ButtonEdit
                                             handleFuntion={() => handleShowhideModalUpdateExperience(item)}
@@ -58,6 +58,8 @@ const ExperienceEmployee = (props: IExperienceEmployee) => {
                                             handleFuntion={() => handleShowhideModalDeleteExperience(item)}
                                         />
                                     </div>
+                                    :
+                                    ""
                                 }
                                 <div className='content'>
                                     {item.jobDescription.split("\n").filter((item) => item !== "").map((item) => {

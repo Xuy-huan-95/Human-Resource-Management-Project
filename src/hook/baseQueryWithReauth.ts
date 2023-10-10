@@ -6,6 +6,7 @@ import {
 } from "@reduxjs/toolkit/dist/query";
 import { RootState } from "../redux/store";
 import { toast } from "react-toastify";
+import moment from "moment";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "https://em-v2.oceantech.com.vn/em/",
@@ -30,8 +31,11 @@ export const baseQueryWithReauth: BaseQueryFn<
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
   const result = await baseQuery(args, api, extraOptions);
+  if (result.meta?.response?.status === 401) {
+    toast.error("Phiên đăng nhập đã hết hạn , vui lòng đăng nhập")
+    localStorage.removeItem("user")
+  }
   if (result.meta?.response?.status === 403) {
-    // try to get a new token
     const refreshToken = await baseQuery(
       "/api/refreshToken",
       api,

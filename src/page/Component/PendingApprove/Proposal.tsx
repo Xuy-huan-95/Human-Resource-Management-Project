@@ -11,7 +11,7 @@ import React from "react"
 const Proposal = () => {
     const dispatch = useAppDispatch()
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
     const [openRegisterForm, setOpenRegisterForm] = useState<boolean>(false)
     const [option, setOption] = useState("")
     const handleChangePage = (event: unknown, newPage: number) => {

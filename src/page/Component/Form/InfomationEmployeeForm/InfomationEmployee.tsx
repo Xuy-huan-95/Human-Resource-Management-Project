@@ -233,6 +233,7 @@ const InfomationEmployee = (props: IInfomationEmployee) => {
                             {dataUser?.team == STATUS_All.TWO && NAME_TEAM.TWO}
                             {dataUser?.team == STATUS_All.THREE && NAME_TEAM.THREE}
                             {dataUser?.team == STATUS_All.FOUR && NAME_TEAM.FOUR}
+                            {dataUser?.team == STATUS_All.FIVE && NAME_TEAM.FIVE}
                         </div>
                     </div>
                     <div className='Contact'>
@@ -256,7 +257,7 @@ const InfomationEmployee = (props: IInfomationEmployee) => {
                             </div>
                         </div>
                         <div className='Contact-item'>
-                            <div className='icon'>
+                            <div className='icon_two'>
                                 <LocationOnIcon />
                             </div>
                             <div className='text'>
@@ -300,7 +301,7 @@ const InfomationEmployee = (props: IInfomationEmployee) => {
                 setOpen={setOpenCreatExperience}
                 action={action}
                 setAction={setAction}
-                id={dataUser.id}
+                dataUser={dataUser}
                 dataUpdateExperience={dataUpdateExperience}
             />
             <DeleteExperience

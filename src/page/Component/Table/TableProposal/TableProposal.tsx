@@ -35,7 +35,7 @@ const TableProposal = (props: ITableProposal) => {
             <Grid>
                 <Grid item lg={24} sm={24}  >
                     <Grid container item spacing={0}>
-                        <TableContainer sx={{ maxHeight: 380 }}>
+                        <TableContainer >
                             <Table stickyHeader aria-label="sticky table" className={classes.table}>
                                 <TableHead>
                                     <TableRow sx={{
@@ -58,6 +58,16 @@ const TableProposal = (props: ITableProposal) => {
                                             align="center"
                                         >
                                             Ghi chú
+                                        </TableCell>
+                                        <TableCell
+                                            align="center"
+                                        >
+                                            Lý do ycbs
+                                        </TableCell>
+                                        <TableCell
+                                            align="center"
+                                        >
+                                            Lý do từ chối
                                         </TableCell>
                                         <TableCell
                                             align="center"
@@ -90,6 +100,12 @@ const TableProposal = (props: ITableProposal) => {
                                                     </TableCell>
                                                     <TableCell >
                                                         {item.note}
+                                                    </TableCell>
+                                                    <TableCell >
+                                                        {item.additionalRequest}
+                                                    </TableCell>
+                                                    <TableCell >
+                                                        {item.reasonForRefusal}
                                                     </TableCell>
                                                     <TableCell align="center">
                                                         {item.type == STATUS_TYPE.ONE && NAME_TYPE.ONE}

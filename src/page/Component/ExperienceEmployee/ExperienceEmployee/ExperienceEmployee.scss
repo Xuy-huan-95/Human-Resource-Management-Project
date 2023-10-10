@@ -32,13 +32,14 @@
         position: relative;
     .time-NameCompany{
         display: flex;
-        align-items: flex-end;
+        align-items: flex-start;
         gap: 13px;
         font-weight: bold;
         margin-bottom: 10px;
         
         .time-exprience{
             font-size: 18.8px;
+            margin-left: -1px;
         }
         .dot-icon{
             margin-bottom: 2px;
@@ -51,6 +52,8 @@
         .NameCompany{
             font-size: 16px;
             margin-left: 3px;
+            width: 60%;
+            overflow-wrap: anywhere;
         }
     }
     .position{
@@ -119,6 +122,7 @@
                 }
             }
             .text-experience{
+                margin-top: 10px;
                 overflow-wrap: anywhere;
             }
         }

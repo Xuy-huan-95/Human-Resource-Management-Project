@@ -54,6 +54,7 @@ const TableProposalApprove = (props: ITableProposalApprove) => {
                                 >
                                     Ghi chú
                                 </TableCell>
+
                                 <TableCell
                                     align="center"
                                 >
@@ -87,6 +88,7 @@ const TableProposalApprove = (props: ITableProposalApprove) => {
                                             <TableCell >
                                                 {item.note}
                                             </TableCell>
+
                                             <TableCell className="text" align='center'>
                                                 {item.type == STATUS_PROFILE.ONE && NAME_PROPOSAL.ONE}
                                                 {item.type == STATUS_PROFILE.TWO && NAME_PROPOSAL.TWO}

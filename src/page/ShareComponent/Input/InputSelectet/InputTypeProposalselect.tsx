@@ -11,9 +11,10 @@ interface IInputTypeProposalselect {
     SetValidate: any
     ErrorEmpty: string,
     ErrorSyntax?: string,
+    valueDiable?: boolean
 }
 const InputTypeProposalselect = (Props: IInputTypeProposalselect | any) => {
-    const { label, value, FuntionOnchange, Validate, ErrorEmpty } = Props
+    const { label, value, FuntionOnchange, Validate, ErrorEmpty, valueDiable } = Props
     return (
         <>
             <TextField
@@ -26,6 +27,8 @@ const InputTypeProposalselect = (Props: IInputTypeProposalselect | any) => {
                 size='small'
                 error={Validate === ERROR_CODE.EMPTY}
                 helperText={Validate === ERROR_CODE.EMPTY && ErrorEmpty}
+                disabled={valueDiable ? valueDiable : false}
+
             >
                 <MenuItem value={1} >
                     Đề xuất

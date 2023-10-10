@@ -125,13 +125,16 @@ const TableRelative = (props: ITableRelative) => {
                                                     {item.relationShip == STATUS_PROFILE.FIVE && RELATIONSHIP.FIVE}
 
                                                 </TableCell>
-                                                <TableCell className='Action-btn'>
-                                                    <ButtonEdit
-                                                        handleFuntion={() => handleSelectActionUpdate(item)}
-                                                    />
-                                                    <ButtonDelete
-                                                        handleFuntion={() => handleDelete(item)}
-                                                    />
+                                                <TableCell >
+                                                    <div className='Action-btn'>
+                                                        <ButtonEdit
+                                                            handleFuntion={() => handleSelectActionUpdate(item)}
+                                                        />
+                                                        <ButtonDelete
+                                                            handleFuntion={() => handleDelete(item)}
+                                                        />
+                                                    </div>
+
                                                 </TableCell>
                                             </TableRow>
                                         </TableBody>

@@ -216,7 +216,9 @@ const TableShare = (props: ITableShare | any) => {
                                                             <ButtonEdit
                                                                 handleFuntion={() => handleShowhideModalUpdateUser(item)}
                                                             />
-
+                                                            <ButtonViewReason
+                                                                handleFuntion={() => handleShowhideRereasonForRefuseModal(item)}
+                                                            />
                                                         </div>
                                                     </>
                                                 }
@@ -227,7 +229,9 @@ const TableShare = (props: ITableShare | any) => {
                                                             <ButtonEdit
                                                                 handleFuntion={() => handleShowhideModalUpdateUser(item)}
                                                             />
-
+                                                            <ButtonViewReason
+                                                                handleFuntion={() => handleShowhideRereasonForRefuseModal(item)}
+                                                            />
                                                         </div>
                                                     </>
                                                 }

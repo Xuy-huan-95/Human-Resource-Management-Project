@@ -7,8 +7,6 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hook";
 import { GetResultDataSalary } from "../../../redux/slice/Increate_Salary.slice "
 import ITableSalaryApprove from "../Table/TableSalaryApprove/TableSalaryApprove"
 
-
-
 const Salary = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -30,7 +28,6 @@ const Salary = () => {
         setOpenRegisterForm(!openRegisterForm)
         setOption("Approve-salary")
     }
-
     return (
         <div>
             {isLoading == false ?

@@ -30,6 +30,12 @@ import ContentRecomementForm from "../../ShareComponent/Form/ContentForm/Content
 import { STATUS_All, NAME_GENDER, STATUS_PROFILE } from "../../ShareComponent/Constants/StatusIfomation"
 import { RESPONSE_STATUS_CODE } from "../../ShareComponent/Constants/StatusCode"
 import IButtonActionForm from "../Form/ButtonActionForm/ButtonActionForm"
+import CustomTabPanel from "../../ShareComponent/CustomTabPanel/CustomTabPanel"
+import TabsList from "../../ShareComponent/Tabslist/TabsList"
+import ContentEmployeeFormResponesive from "../../ShareComponent/Form/ContentForm/ContentEmployeeFormResponesive"
+import ContentSalaryFormResponesive from "../../ShareComponent/Form/ContentForm/ContentSalaryFormResponesive"
+import ContentProcessFormResponesive from "../../ShareComponent/Form/ContentForm/ContentProcessFormResponesive"
+import ContentRecomendFormResponsive from "../../ShareComponent/Form/ContentForm/ContentRecomendFormResponsive"
 interface IForm {
     open: boolean,
     setOpen: any
@@ -53,6 +59,8 @@ const Form = (props: IForm | any) => {
     const { data } = useGetEmployeeByIdQuery(id, { refetchOnMountOrArgChange: true })
     const [openApproveModal, setOpenApproveModal] = useState<boolean>(false)
     const [actionApprove, setActionApprove] = useState<string>("")
+    const [value, setValue] = useState(0);
+
     useEffect(() => {
         if (data && data.code == RESPONSE_STATUS_CODE.SUCCESS) {
             dispatch(GetResultData(data?.data))
@@ -92,6 +100,10 @@ const Form = (props: IForm | any) => {
         setOpenApproveModal(!openApproveModal)
         setActionApprove("User-Approve")
     }
+
+    const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+        setValue(newValue);
+    };
 
     const handlShowHideModalNeedToApprove = () => {
         setOpenApproveModal(!openApproveModal)
@@ -171,9 +183,9 @@ const Form = (props: IForm | any) => {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        <Box sx={{ flexGrow: 1 }}>
+                        <Box sx={{ display: { xs: 'none', lg: 'block' } }} >
                             <Grid container spacing={1} columns={12}>
-                                <Grid item xs={4} className='sidebar'>
+                                <Grid item sx={{ display: { xs: 'none', sm: 'block' } }} className='sidebar'>
                                     {!option || option == "Approve-User" || option == "View-End" || option == "End-Infomation" || option == "View-Profile"
                                         ?
                                         <ListEmployeeForm
@@ -275,6 +287,127 @@ const Form = (props: IForm | any) => {
                                     }
                                 </Grid>
                             </Grid>
+                        </Box>
+                        <Box sx={{ display: { xs: 'block', lg: 'none' } }} >
+                            <Box className='tablist' >
+
+                                {!option || option == "Approve-User" || option == "View-End" || option == "End-Infomation" || option == "View-Profile"
+                                    ?
+                                    <div >
+                                        <TabsList
+                                            value={value}
+                                            handleChange={handleChange}
+                                            name={"Employee_Doc"}
+                                        />
+                                    </div>
+
+                                    :
+                                    ""
+                                }
+                                {option === "salary_Increate" || option === "Approve-salary"
+                                    ?
+                                    <TabsList
+                                        value={value}
+                                        handleChange={handleChange}
+                                        name={"Salary_Doc"}
+                                    />
+                                    :
+                                    ""
+                                }
+                                {option == "Process_increate" || option == "Approve-process" ?
+                                    <TabsList
+                                        value={value}
+                                        handleChange={handleChange}
+                                        name={"Process_Doc"}
+                                    />
+                                    :
+                                    ""
+                                }
+
+                                {option == "Recommend" || option == "Approve-Proposal" && proposal.type == STATUS_All.TWO || option == "ProposalView" && proposal.type == STATUS_All.TWO ?
+                                    <TabsList
+                                        value={value}
+                                        handleChange={handleChange}
+                                        name={"Recommend_Doc"}
+                                    />
+                                    :
+                                    ""
+                                }
+
+                                {option == "Propose" || option == "Approve-Proposal" && proposal.type == STATUS_All.ONE || option == "ProposalView" && proposal.type == STATUS_All.ONE ?
+                                    <TabsList
+                                        value={value}
+                                        handleChange={handleChange}
+                                        name={"Propose_Doc"}
+                                    />
+                                    :
+                                    ""
+                                }
+
+                                {option == "Advisory" || option == "Approve-Proposal" && proposal.type == STATUS_All.THREE || option == "ProposalView" && proposal.type == STATUS_All.THREE ?
+                                    <TabsList
+                                        value={value}
+                                        handleChange={handleChange}
+                                        name={"Advisory_Doc"}
+                                    />
+                                    :
+                                    ""
+                                }
+
+                            </Box>
+                            <div className='tablist-body'>
+                                {!option || option == "Approve-User" || option == "View-End" || option == "End-Infomation" || option == "View-Profile"
+                                    ?
+                                    <div>
+                                        <ContentEmployeeFormResponesive
+                                            value={value}
+                                            dataUser={dataUser}
+                                            setDataUser={setDataUser}
+                                        />
+                                    </div>
+
+                                    :
+                                    ""
+                                }
+                                {option === "salary_Increate" || option === "Approve-salary"
+                                    ?
+                                    <ContentSalaryFormResponesive
+                                        value={value}
+                                        dataUser={dataUser}
+                                        setDataUser={setDataUser}
+                                    />
+                                    :
+                                    ""
+                                }
+                                {option == "Process_increate" || option == "Approve-process" ?
+                                    <ContentProcessFormResponesive
+                                        value={value}
+                                        dataUser={dataUser}
+                                        setDataUser={setDataUser}
+                                    />
+                                    :
+                                    ""
+                                }
+                                {option == "Recommend" || option == "Approve-Proposal" && proposal.type == STATUS_All.ONE || option == "Propose"
+                                    ||
+                                    option == "Approve-Proposal" && proposal.type == STATUS_All.TWO || option == "Advisory" || option == "Approve-Proposal" && proposal.type == STATUS_All.THREE
+                                    || option == "ProposalView"
+                                    ?
+                                    <div className='wrapper'>
+                                        <ContentRecomendFormResponsive
+                                            value={value}
+                                            dataUser={dataUser}
+                                            setDataUser={setDataUser}
+                                        />
+                                        :
+                                        ""
+                                    </div>
+                                    :
+                                    ""
+                                }
+                            </div>
+
+
                         </Box>
                     </DialogContentText>
                 </DialogContent>

@@ -23,6 +23,12 @@ export const validateUseInfo = (currentState, updateState, validate, setValidate
         })
         return false
     }
+    if (updateState["name"].length > 50) {
+        setValidate({
+            ...validate, name: ERROR_CODE.EMPTY
+        })
+        return false
+    }
     if (!regxName.test(updateState["name"])) {
 
         setValidate({
@@ -60,6 +66,12 @@ export const validateUseInfo = (currentState, updateState, validate, setValidate
         })
         return false
     }
+    if (updateState["email"].length > 255) {
+        setValidate({
+            ...validate, email: ERROR_CODE.EMPTY
+        })
+        return false
+    }
     if (!updateState["phone"]) {
         setValidate({
             ...validate, phone: ERROR_CODE.EMPTY
@@ -67,6 +79,12 @@ export const validateUseInfo = (currentState, updateState, validate, setValidate
         return false
     }
     if (!updateState["address"]) {
+        setValidate({
+            ...validate, address: ERROR_CODE.EMPTY
+        })
+        return false
+    }
+    if (updateState["address"].length > 255) {
         setValidate({
             ...validate, address: ERROR_CODE.EMPTY
         })
@@ -97,7 +115,19 @@ export const validateUseInfo = (currentState, updateState, validate, setValidate
         })
         return false
     }
+    if (updateState["ethnic"].length > 255) {
+        setValidate({
+            ...validate, ethnic: ERROR_CODE.EMPTY
+        })
+        return false
+    }
     if (!updateState["religion"]) {
+        setValidate({
+            ...validate, religion: ERROR_CODE.EMPTY
+        })
+        return false
+    }
+    if (updateState["religion"].length > 255) {
         setValidate({
             ...validate, religion: ERROR_CODE.EMPTY
         })
@@ -110,6 +140,12 @@ export const validateUseInfo = (currentState, updateState, validate, setValidate
         return false
     }
     if (!updateState["placeOfIssueCard"]) {
+        setValidate({
+            ...validate, placeOfIssueCard: ERROR_CODE.EMPTY
+        })
+        return false
+    }
+    if (updateState["placeOfIssueCard"].length > 255) {
         setValidate({
             ...validate, placeOfIssueCard: ERROR_CODE.EMPTY
         })
@@ -162,6 +198,8 @@ export const handleOnChangeInputUserInfo = (name: string, value: any, formUpdate
         if (value && /^([^0-9]*)$/.test(value)) setValidateInput({ ...validateInput, name: "" })
         if (value && !/^([^0-9]*)$/.test(value)) setValidateInput({ ...validateInput, name: ERROR_CODE.SYNTAX })
         if (!value) setValidateInput({ ...validateInput, name: "" })
+        if (value.length > 50) setValidateInput({ ...validateInput, name: ERROR_CODE.EMPTY })
+
     }
     if (name == "code") {
         setformUpdate({ ...formUpdate, code: value })
@@ -177,6 +215,8 @@ export const handleOnChangeInputUserInfo = (name: string, value: any, formUpdate
         if (!value.includes("@gmail.com")) setValidateInput({ ...validateInput, email: ERROR_CODE.SYNTAX })
         if (value.includes("@gmail.com")) setValidateInput({ ...validateInput, email: "" })
         if (!value) setValidateInput({ ...validateInput, email: "" })
+        if (value.length > 255) setValidateInput({ ...validateInput, email: ERROR_CODE.EMPTY })
+
     }
     if (name == "phone") {
         setformUpdate({ ...formUpdate, phone: value })
@@ -188,6 +228,8 @@ export const handleOnChangeInputUserInfo = (name: string, value: any, formUpdate
         setformUpdate({ ...formUpdate, address: value })
         if (value) setValidateInput({ ...validateInput, address: "" })
         if (!value) setValidateInput({ ...validateInput, address: "" })
+        if (value.length > 255) setValidateInput({ ...validateInput, address: "1" })
+
     }
     if (name == "team") {
         setformUpdate({ ...formUpdate, team: value })
@@ -222,16 +264,19 @@ export const handleOnChangeInputUserInfo = (name: string, value: any, formUpdate
         setformUpdate({ ...formUpdate, placeOfIssueCard: value })
         if (value) setValidateInput({ ...validateInput, placeOfIssueCard: "" })
         if (!value) setValidateInput({ ...validateInput, placeOfIssueCard: "" })
+        if (value.length > 255) setValidateInput({ ...validateInput, placeOfIssueCard: ERROR_CODE.EMPTY })
     }
     if (name == "ethnic") {
         setformUpdate({ ...formUpdate, ethnic: value })
         if (value) setValidateInput({ ...validateInput, ethnic: "" })
         if (!value) setValidateInput({ ...validateInput, ethnic: "" })
+        if (value.length > 255) setValidateInput({ ...validateInput, ethnic: ERROR_CODE.EMPTY })
     }
-
     if (name == "religion") {
         setformUpdate({ ...formUpdate, religion: value })
         if (value) setValidateInput({ ...validateInput, religion: "" })
         if (!value) setValidateInput({ ...validateInput, religion: "" })
+        if (value.length > 255) setValidateInput({ ...validateInput, religion: ERROR_CODE.EMPTY })
+
     }
 }

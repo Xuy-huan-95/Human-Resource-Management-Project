@@ -11,9 +11,10 @@ interface IInputTeamSelecter {
     SetValidate: any
     ErrorEmpty: string,
     ErrorSyntax?: string,
+    valueDiable?: boolean
 }
 const InputPositionSelecter = (Props: IInputTeamSelecter | any) => {
-    const { label, value, FuntionOnchange, Validate, ErrorEmpty } = Props
+    const { label, value, FuntionOnchange, Validate, ErrorEmpty, valueDiable } = Props
     return (
         <>
             <TextField
@@ -26,6 +27,7 @@ const InputPositionSelecter = (Props: IInputTeamSelecter | any) => {
                 size='small'
                 error={Validate === ERROR_CODE.EMPTY}
                 helperText={Validate === ERROR_CODE.EMPTY && ErrorEmpty}
+                disabled={valueDiable ? valueDiable : false}
             >
                 <MenuItem value={1} >
                     Nhân viên Ba

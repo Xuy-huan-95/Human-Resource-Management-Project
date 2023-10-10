@@ -11,12 +11,19 @@ export const validateProposalModal = (dataProposal, initProposal, validate, setV
         setValidate({ ...validate, content: ERROR_CODE.EMPTY })
         return false
     }
-
+    if (dataProposal["content"].length > 255) {
+        setValidate({ ...validate, content: ERROR_CODE.EMPTY })
+        return false
+    }
     if (!dataProposal["type"]) {
         setValidate({ ...validate, type: ERROR_CODE.EMPTY })
         return false
     }
     if (!dataProposal["detailedDescription"]) {
+        setValidate({ ...validate, detailedDescription: ERROR_CODE.EMPTY })
+        return false
+    }
+    if (dataProposal["detailedDescription"].length > 255) {
         setValidate({ ...validate, detailedDescription: ERROR_CODE.EMPTY })
         return false
     }
@@ -60,6 +67,9 @@ export const ValidateOnChangeInputProposal = (name: string, value: any, dataProp
         if (value) {
             setValidate({ ...validate, content: "" })
         }
+        if (value.length > 255) {
+            setValidate({ ...validate, content: ERROR_CODE.EMPTY })
+        }
     }
     if (name == "detailedDescription") {
         setDataProposal({ ...dataProposal, detailedDescription: value })
@@ -68,6 +78,9 @@ export const ValidateOnChangeInputProposal = (name: string, value: any, dataProp
         }
         if (value) {
             setValidate({ ...validate, detailedDescription: "" })
+        }
+        if (value.length > 255) {
+            setValidate({ ...validate, detailedDescription: ERROR_CODE.EMPTY })
         }
     }
 }

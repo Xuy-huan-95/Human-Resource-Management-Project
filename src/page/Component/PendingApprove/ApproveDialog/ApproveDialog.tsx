@@ -8,7 +8,7 @@ import "./ApproveDialog.scss"
 import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
 import { dataApprove, validateDataApprove } from "../../../InitData/InitData"
-import { useUpdateEmployeeMutation } from "../../../../redux/slice/Employee/index"
+import { useUpdateEmployeeMutation, useGetEmployeeByIdQuery } from "../../../../redux/slice/Employee/index"
 import { useUpdateSalaryMutation } from "../../../../redux/slice/Salary_increate/index"
 import { useUpdateProcessMutation } from "../../../../redux/slice/Proccess/index"
 import { useAppDispatch, useAppSelector } from "../../../../redux/hook";
@@ -31,7 +31,7 @@ interface IApproveActionModal {
 }
 const ApproveDialog = (props: IApproveActionModal | any) => {
     const { open, setOpen, actionApprove, openresitermodal, setopenresitermodal, openEndModal, setOpenEndModal } = props
-    const [data, setData] = useState(dataApprove)
+    const [dataAction, setDataAction] = useState(dataApprove)
     const [validateApproveData, setValidateApproveData] = useState(validateDataApprove)
     const [update] = useUpdateEmployeeMutation()
     const [UpdateSalary] = useUpdateSalaryMutation()
@@ -41,6 +41,7 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
     const dataSalary = useAppSelector((state) => state.salary.SalaryInfomation)
     const process = useAppSelector((state) => state.process.ProcessInfomation)
     const proposal = useAppSelector((state) => state.Proposal.ProposalInfomation)
+    const [UpdateData] = useUpdateEmployeeMutation()
 
     const handleClose = () => {
         setOpen(false);
@@ -50,9 +51,9 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
 
     const handleApproveUser = async () => {
         try {
-            let check = ValidateDataApprove(data, validateApproveData, setValidateApproveData, actionApprove)
+            let check = ValidateDataApprove(dataAction, validateApproveData, setValidateApproveData, actionApprove)
             if (actionApprove == "User-Approve" && check == true) {
-                let dataUpdate = { ...dataUser, appointmentDate: data.time, submitProfileStatus: STATUS_PROFILE.THREE }
+                let dataUpdate = { ...dataUser, appointmentDate: dataAction.time, submitProfileStatus: STATUS_PROFILE.THREE }
                 let result = await update(dataUpdate).unwrap()
                 if (result.code == 200) {
                     toast.success("Bạn đã phê duyệt nhân viên thành công")
@@ -61,7 +62,7 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                 }
             }
             if (actionApprove == "Salary-Approve" && check == true) {
-                let dataUpdate = { ...dataSalary, acceptanceDate: data.time, salaryIncreaseStatus: STATUS_All.THREE }
+                let dataUpdate = { ...dataSalary, acceptanceDate: dataAction.time, salaryIncreaseStatus: STATUS_All.THREE }
                 let result = await UpdateSalary(dataUpdate).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã phê duyệt đề xuất tăng lương thành công")
@@ -71,10 +72,10 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
             }
             if (actionApprove == "Process-Approve" && check == true) {
                 try {
-                    let dataprocess = { ...process, acceptanceDate: data.time, processStatus: STATUS_PROFILE.THREE }
+                    let dataprocess = { ...process, acceptanceDate: dataAction.time, processStatus: STATUS_PROFILE.THREE }
                     let result = await UpdateProcess(dataprocess).unwrap()
                     if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
-                        toast.success("Bạn đã phê duyệt đề xuất tăng lương thành công")
+                        toast.success("Bạn đã phê duyệt đề xuất thăng chức thành công")
                         setOpen(!open)
                         setopenresitermodal(!openresitermodal)
                     }
@@ -85,7 +86,7 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
             }
 
             if (actionApprove == "proposal-Approve" && check == true) {
-                let dataprocess = { ...proposal, acceptanceDate: data.time, proposalStatus: STATUS_PROFILE.THREE }
+                let dataprocess = { ...proposal, acceptanceDate: dataAction.time, proposalStatus: STATUS_PROFILE.THREE }
                 let result = await UpdateProposal(dataprocess).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã phê duyệt đề xuất tham mưu thành công")
@@ -94,7 +95,7 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                 }
             }
             if (actionApprove == "Need-Document_access" && check == true) {
-                let dataUpdate = { ...dataUser, additionalRequest: data.need, submitProfileStatus: STATUS_PROFILE.FOUR }
+                let dataUpdate = { ...dataUser, additionalRequest: dataAction.need, submitProfileStatus: STATUS_PROFILE.FOUR }
                 let result = await update(dataUpdate).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã từ chối yêu cầu thêm mới")
@@ -103,7 +104,7 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                 }
             }
             if (actionApprove == "Refuse-Document_access" && check == true) {
-                let dataUpdate = { ...dataUser, rejectionDate: data.time, reasonForRejection: data.need, submitProfileStatus: STATUS_PROFILE.FIVE }
+                let dataUpdate = { ...dataUser, rejectionDate: dataAction.time, reasonForRejection: dataAction.need, submitProfileStatus: STATUS_PROFILE.FIVE }
                 let result = await update(dataUpdate).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã từ chối yêu cầu thêm mới")
@@ -112,7 +113,8 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                 }
             }
             if (actionApprove == "Need-Document_Process" && check == true) {
-                let dataprocess = { ...process, additionalRequest: data.need, processStatus: STATUS_PROFILE.FOUR }
+                console.log("process", process)
+                let dataprocess = { ...process, additionalRequest: dataAction.need, processStatus: STATUS_PROFILE.FOUR }
                 let result = await UpdateProcess(dataprocess).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã yêu cầu bổ xung thêm chi tiết đề xuất thăng chức")
@@ -121,7 +123,7 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                 }
             }
             if (actionApprove == "Need-Document_salary" && check == true) {
-                let dataUpdate = { ...dataSalary, additionalRequest: data.need, salaryIncreaseStatus: STATUS_All.FOUR }
+                let dataUpdate = { ...dataSalary, additionalRequest: dataAction.need, salaryIncreaseStatus: STATUS_All.FOUR }
                 let result = await UpdateSalary(dataUpdate).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã yêu cầu bổ xung thêm thông tin đề xuất tăng lương")
@@ -130,7 +132,7 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                 }
             }
             if (actionApprove == "Need-Document_Proposal" && check == true) {
-                let dataUpdate = { ...proposal, additionalRequest: data.need, proposalStatus: STATUS_PROFILE.FOUR }
+                let dataUpdate = { ...proposal, additionalRequest: dataAction.need, proposalStatus: STATUS_PROFILE.FOUR }
                 let result = await UpdateProposal(dataUpdate).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã yêu cầu bổ xung thêm thông tin đề xuất tham mưu")
@@ -139,7 +141,7 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                 }
             }
             if (actionApprove == "End-Approve" && check == true) {
-                let dataUpdate = { ...dataUser, terminationAppointmentDate: data.time, submitProfileStatus: STATUS_PROFILE.SEVEN }
+                let dataUpdate = { ...dataUser, terminationAppointmentDate: dataAction.time, submitProfileStatus: STATUS_PROFILE.SEVEN }
                 let result = await update(dataUpdate).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã phê duyệt kết thúc hồ sơ thành công")
@@ -148,7 +150,7 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                 }
             }
             if (actionApprove == "Need-Document" && check == true) {
-                let dataUpdate = { ...dataUser, additionalRequestTermination: data.need, submitProfileStatus: STATUS_PROFILE.EIGHT }
+                let dataUpdate = { ...dataUser, additionalRequestTermination: dataAction.need, submitProfileStatus: STATUS_PROFILE.EIGHT }
                 let result = await update(dataUpdate).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã yêu cầu bổ xung thêm chi tiết")
@@ -157,7 +159,7 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                 }
             }
             if (actionApprove == "Refuse" && check == true) {
-                let dataUpdate = { ...dataUser, refuseEndProfileDay: data.time, reasonForRefuseEndProfile: data.need, submitProfileStatus: STATUS_PROFILE.NIGHT }
+                let dataUpdate = { ...dataUser, refuseEndProfileDay: dataAction.time, reasonForRefuseEndProfile: dataAction.need, submitProfileStatus: STATUS_PROFILE.NIGHT }
                 let result = await update(dataUpdate).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã từ chối yêu cầu nghỉ việc")
@@ -166,7 +168,7 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                 }
             }
             if (actionApprove == "Refuse-Document_salary" && check == true) {
-                let dataUpdate = { ...dataSalary, rejectionDate: data.time, reasonForRefusal: data.need, salaryIncreaseStatus: STATUS_All.FIVE }
+                let dataUpdate = { ...dataSalary, rejectionDate: dataAction.time, reasonForRefusal: dataAction.need, salaryIncreaseStatus: STATUS_All.FIVE }
                 let result = await UpdateSalary(dataUpdate).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã từ chối đề xuất tăng lương ")
@@ -175,7 +177,7 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                 }
             }
             if (actionApprove == "Refuse-Document_process" && check == true) {
-                let dataprocess = { ...process, rejectionDate: data.time, reasonForRefusal: data.need, processStatus: STATUS_PROFILE.FIVE }
+                let dataprocess = { ...process, rejectionDate: dataAction.time, reasonForRefusal: dataAction.need, processStatus: STATUS_PROFILE.FIVE }
                 let result = await UpdateProcess(dataprocess).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã từ chối đề xuất tăng lương ")
@@ -184,7 +186,7 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                 }
             }
             if (actionApprove == "Refuse-Document_Proposal" && check == true) {
-                let dataprocess = { ...proposal, rejectionDate: data.time, reasonForRefusal: data.need, proposalStatus: STATUS_PROFILE.FIVE }
+                let dataprocess = { ...proposal, rejectionDate: dataAction.time, reasonForRefusal: dataAction.need, proposalStatus: STATUS_PROFILE.FIVE }
                 let result = await UpdateProposal(dataprocess).unwrap()
                 if (result.code == RESPONSE_STATUS_CODE.SUCCESS) {
                     toast.success("Bạn đã từ chối đề xuất tham mưu ")
@@ -198,7 +200,7 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
 
     }
     useEffect(() => {
-        setData({ ...data, time: moment(new Date()).format("YYYY-MM-DD") })
+        setDataAction({ ...dataAction, time: moment(new Date()).format("YYYY-MM-DD") })
     }, [open])
 
     return (
@@ -225,8 +227,8 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                                         <Input
                                             label={"Ngày Phê duyệt"}
                                             type={"date"}
-                                            value={data.time}
-                                            FuntionOnchange={(event) => setData({ ...data, time: event.target.value })}
+                                            value={dataAction.time}
+                                            FuntionOnchange={(event) => setDataAction({ ...dataAction, time: event.target.value })}
                                             Validate={validateApproveData.time}
                                             ErrorEmpty={ERROR_STATUS_EMPTY.THIRTYEIGHT}
                                         />
@@ -243,8 +245,8 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                                             <Input
                                                 label={"Yêu cầu bổ xung chi tiết"}
                                                 type={"text"}
-                                                value={data.need}
-                                                FuntionOnchange={(event) => setData({ ...data, need: event.target.value })}
+                                                value={dataAction.need}
+                                                FuntionOnchange={(event) => setDataAction({ ...dataAction, need: event.target.value })}
                                                 Validate={validateApproveData.need}
                                                 ErrorEmpty={ERROR_STATUS_EMPTY.THIRTYNIGHT}
                                             />
@@ -264,8 +266,8 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                                                     <Input
                                                         label={"Ngày từ chối"}
                                                         type={"date"}
-                                                        value={data.time}
-                                                        FuntionOnchange={(event) => setData({ ...data, time: event.target.value })}
+                                                        value={dataAction.time}
+                                                        FuntionOnchange={(event) => setDataAction({ ...dataAction, time: event.target.value })}
                                                         Validate={validateApproveData.time}
                                                         ErrorEmpty={ERROR_STATUS_EMPTY.FORTY}
                                                     />
@@ -274,8 +276,8 @@ const ApproveDialog = (props: IApproveActionModal | any) => {
                                                     <Input
                                                         label={"Lý do từ chối"}
                                                         type={"text"}
-                                                        value={data.need}
-                                                        FuntionOnchange={(event) => setData({ ...data, need: event.target.value })}
+                                                        value={dataAction.need}
+                                                        FuntionOnchange={(event) => setDataAction({ ...dataAction, need: event.target.value })}
                                                         Validate={validateApproveData.need}
                                                         ErrorEmpty={ERROR_STATUS_EMPTY.FORTYONE}
                                                     />

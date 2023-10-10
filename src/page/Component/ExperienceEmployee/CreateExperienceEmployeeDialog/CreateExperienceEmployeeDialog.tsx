@@ -17,16 +17,17 @@ import { validateExperience } from "../../../InitData/InitData"
 import { validateDataExperience } from "../../../../validate/ValidateExperience/ValidateExperience"
 import Input from "../../../ShareComponent/Input/Input";
 import { ERROR_STATUS_EMPTY, ERROR_STATUS_SYNTAX } from "../../../ShareComponent/Constants/StatusCode"
+import { IUser } from "../../../../interface/Employee.interface";
 export interface Iprop {
     open: any,
     setOpen: any
     action: string
     setAction: any
-    id: number
+    dataUser: IUser
     dataUpdateExperience: IExperience
 }
 const CreateExperienceEmployeeDialog = (props: Iprop) => {
-    const { open, setOpen, action, setAction, id, dataUpdateExperience } = props
+    const { open, setOpen, action, setAction, dataUser, dataUpdateExperience } = props
     const [experience, setExperience] = useState(initStateExperience)
     const [create] = useCreateExperieceMutation()
     const [update] = useUpdateExperieceMutation()
@@ -46,7 +47,7 @@ const CreateExperienceEmployeeDialog = (props: Iprop) => {
             let check = validateDataExperience(experience, initStateExperience, validate, setValidate)
             if (check == true) {
                 let reuslt = await create({
-                    employeeId: id,
+                    employeeId: dataUser.id,
                     data: [{ ...experience, leavingReason: "." }]
                 }).unwrap()
                 if (reuslt.code == RESPONSE_STATUS_CODE.SUCCESS) {
@@ -59,7 +60,6 @@ const CreateExperienceEmployeeDialog = (props: Iprop) => {
                 }
             }
         } catch (error) {
-            console.log(error)
         }
     }
 
@@ -75,7 +75,6 @@ const CreateExperienceEmployeeDialog = (props: Iprop) => {
                 }
             }
         } catch (error) {
-            console.log(error)
         }
     }
     useEffect(() => {
@@ -83,6 +82,10 @@ const CreateExperienceEmployeeDialog = (props: Iprop) => {
             if (dataUpdateExperience) setExperience({ ...dataUpdateExperience, startDate: moment(dataUpdateExperience?.startDate).format("YYYY-MM-DD"), endDate: moment(dataUpdateExperience?.startDate).format("YYYY-MM-DD") })
         }
     }, [action])
+
+    useEffect(() => {
+        console.log("dataUser", dataUser)
+    }, [dataUser])
     return (
         <div >
             <Dialog

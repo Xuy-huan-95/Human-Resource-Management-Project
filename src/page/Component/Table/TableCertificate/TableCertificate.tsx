@@ -72,25 +72,33 @@ const TableCertificate = (props: ITableCertificate) => {
                                     <TableBody key={`item-${index}`}>
 
                                         <TableRow hover role="checkbox" tabIndex={-1} >
-                                            <TableCell >
+                                            <TableCell className='width_field' title={item.certificateName}
+                                            >
                                                 {item.certificateName}
                                             </TableCell>
-                                            <TableCell >
+                                            <TableCell className='width_field' title={item.content}
+                                            >
                                                 {item.content}
                                             </TableCell>
-                                            <TableCell align='center'>
+                                            <TableCell align='center' className='width_field'
+                                            >
                                                 {moment(item.issueDate).format("DD/MM/YYYY")}
                                             </TableCell>
-                                            <TableCell align='center' >
+                                            <TableCell align='center' className='width_field' title={item.field}
+                                            >
                                                 {item.field}
                                             </TableCell>
-                                            <TableCell className='Action' >
-                                                <ButtonEdit
-                                                    handleFuntion={() => handleSetActionEdit(item)}
-                                                />
-                                                <ButtonDelete
-                                                    handleFuntion={() => handleDelete(item)}
-                                                />
+                                            <TableCell  >
+                                                <div className='Action'>
+                                                    <ButtonEdit
+                                                        handleFuntion={() => handleSetActionEdit(item)}
+                                                    />
+                                                    <ButtonDelete
+                                                        handleFuntion={() => handleDelete(item)}
+                                                    />
+
+                                                </div>
+
                                             </TableCell>
                                         </TableRow>
                                     </TableBody>

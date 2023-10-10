@@ -3,11 +3,10 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
 import { IUser } from "../../../../interface/Employee.interface"
 import ButtonExit from "../../../ShareComponent/Button/ButtonExit"
 import { STATUS_All, NAME_GENDER, STATUS_PROFILE } from "../../../ShareComponent/Constants/StatusIfomation"
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface IReasonForRefuseModal {
     open: boolean,
@@ -15,17 +14,17 @@ interface IReasonForRefuseModal {
     dataReasonRefuse: IUser
 }
 const ReasonModal = (props: IReasonForRefuseModal | any) => {
-    const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('xl'));
     const { open, setOpen, dataReasonRefuse } = props
     const handleClose = () => {
         setOpen(false);
     };
+    useEffect(() => {
+        console.log("dataReasonRefuse", dataReasonRefuse)
+    }, [open])
     return (
         <div>
 
             <Dialog
-                fullScreen={fullScreen}
                 open={open}
                 onClose={handleClose}
                 aria-labelledby="responsive-dialog-title"
@@ -33,11 +32,18 @@ const ReasonModal = (props: IReasonForRefuseModal | any) => {
                 fullWidth
             >
                 <DialogTitle id="customized-dialog-title">
-                    {dataReasonRefuse.submitProfileStatus == STATUS_PROFILE.NIGHT ? "Lý do từ chối kết thúc hồ sơ" : "Lý do Bổ sung kết thúc hồ sơ"}
+                    {dataReasonRefuse.submitProfileStatus == STATUS_PROFILE.NIGHT && "Lý do từ chối kết thúc hồ sơ"}
+                    {dataReasonRefuse.submitProfileStatus == STATUS_PROFILE.EIGHT && "Lý do Bổ sung kết thúc hồ sơ"}
+                    {dataReasonRefuse.submitProfileStatus == STATUS_PROFILE.FIVE && "Lý do từ chối thêm mới nhân viên"}
+                    {dataReasonRefuse.submitProfileStatus == STATUS_PROFILE.FOUR && "Lý do bổ xung thêm mới nhân viên"}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        {dataReasonRefuse.submitProfileStatus == STATUS_PROFILE.NIGHT ? dataReasonRefuse?.reasonForRefuseEndProfile : dataReasonRefuse?.additionalRequestTermination}
+                        {dataReasonRefuse.submitProfileStatus == STATUS_PROFILE.NIGHT && dataReasonRefuse?.reasonForRefuseEndProfile}
+                        {dataReasonRefuse.submitProfileStatus == STATUS_PROFILE.EIGHT && dataReasonRefuse?.additionalRequestTermination}
+                        {dataReasonRefuse.submitProfileStatus == STATUS_PROFILE.FIVE && dataReasonRefuse?.reasonForRejection}
+                        {dataReasonRefuse.submitProfileStatus == STATUS_PROFILE.FOUR && dataReasonRefuse?.additionalRequest}
+
                     </DialogContentText>
                 </DialogContent>
                 <ButtonExit

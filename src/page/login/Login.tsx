@@ -8,12 +8,13 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import "./login.scss";
+import "./Login.scss";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
 import { loginApi } from "../../redux/slice/login.slice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { GetPermisson } from "../../redux/slice/CheckPermission.slice"
+import moment from "moment";
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
@@ -57,10 +58,9 @@ const Login = () => {
       toast.success("Đăng nhập thành công");
       localStorage.setItem("user", JSON.stringify(user));
       localStorage.setItem("permissson", Permission)
+      localStorage.setItem("tokenExpire", JSON.stringify(moment(new Date(Date.now() + 35343 * 1000)).format("MMMM Do YYYY, h:mm:ss a")))
       dispatch(GetPermisson(Permission))
       navigate("/manageuser/1");
-
-
     }
   }, [isSuccess, user]);
 

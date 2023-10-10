@@ -11,6 +11,7 @@ import DeleteModal from "../DeleteProposalEmployeeDialog"
 import RegistrationForms from "../../Form/Form"
 import { useAppDispatch, useAppSelector } from "../../../../redux/hook";
 import { GetResultProcess } from "../../../../redux/slice/process.slice"
+import { GetResultData } from "../../../../redux/slice/RegisterUser.slice"
 import { validateProcess } from "../../../InitData/InitData"
 import { validateModalProcess, validateInputProcess } from "../../../../validate/ValidateProcess/ValidateProcess"
 import Input from "../../../ShareComponent/Input/Input"
@@ -20,7 +21,8 @@ import { STATUS_PROFILE } from "../../../ShareComponent/Constants/StatusIfomatio
 import ButtonSubmit from "../../../ShareComponent/Button/ButtonSubmit"
 import ButtonCancel from "../../../ShareComponent/Button/ButtonCancel"
 import TableProcess from "../../Table/TableProcess/TableProcess"
-import { STATUS_All } from "../../../ShareComponent/Constants/StatusIfomation"
+import { STATUS_PROCESS, NAME_PROCESS } from "../../../ShareComponent/Constants/StatusIfomation"
+import { useGetEmployeeByIdQuery } from "../../../../redux/slice/Employee/index"
 const ModalProcess = () => {
     const dispatch = useAppDispatch()
     const dataUser = useAppSelector((state) => state.registerUser.userInfomation)
@@ -28,7 +30,8 @@ const ModalProcess = () => {
     const [actionStateProcess, setActionStateProcess] = useState<string>("")
     const [showhideDeleteProcessModal, setShowhideDeleteProcessModal] = useState<boolean>(false)
     const [Create] = useAddProcessByEmpMutation()
-    const { data } = useGetProcessByEmpQuery(dataUser.id)
+    const { data } = useGetProcessByEmpQuery(dataUser.id, { refetchOnMountOrArgChange: true })
+    const { data: getCurrentUserStatus } = useGetEmployeeByIdQuery(dataUser.id, { refetchOnMountOrArgChange: true })
     const [Update] = useUpdateProcessMutation()
     const [ActionDelete, setActionDelete] = useState<string>("")
     const [showhideRegisterForm, setShowhideRegisterForm] = useState<boolean>(false)
@@ -36,7 +39,6 @@ const ModalProcess = () => {
     const [validate, setValidate] = useState(validateProcess)
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(3);
-
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
     };
@@ -88,10 +90,7 @@ const ModalProcess = () => {
                 }
             }
         } catch (error) {
-            console.log(error)
         }
-
-
     }
     const handleCancelUpdate = () => {
         setActionStateProcess("")
@@ -113,14 +112,35 @@ const ModalProcess = () => {
         setDataProces({ ...dataProces, promotionDay: moment(new Date()).format("YYYY-MM-DD") })
     }, [])
 
+    useEffect(() => {
+        dispatch(GetResultData({ ...dataUser, currentPosition: getCurrentUserStatus?.data?.currentPosition }))
+    }, [getCurrentUserStatus])
     return (
         <div className="height">
+
             <Box sx={{ flexGrow: 1 }}>
-                {dataUser.submitProfileStatus !== STATUS_PROFILE.SIX &&
+                {dataUser.submitProfileStatus !== STATUS_PROFILE.SIX && data?.data.some((item) => item.processStatus == "2") == false
+                    ?
                     <>
                         <Grid item lg={24} sm={24}  >
                             <Grid container item spacing={2}>
-                                <Grid item xs={6}>
+                                <Grid item xs={4}>
+                                    <Input
+                                        label={"Chức vụ hiện tại"}
+                                        disabled
+                                        value={
+                                            dataUser.currentPosition == STATUS_PROCESS.ONE && NAME_PROCESS.ONE ||
+                                            dataUser.currentPosition == STATUS_PROCESS.TWO && NAME_PROCESS.TWO ||
+                                            dataUser.currentPosition == STATUS_PROCESS.THREE && NAME_PROCESS.THREE ||
+                                            dataUser.currentPosition == STATUS_PROCESS.FOUR && NAME_PROCESS.FOUR ||
+                                            dataUser.currentPosition == STATUS_PROCESS.FIVE && NAME_PROCESS.FIVE ||
+                                            dataUser.currentPosition == STATUS_PROCESS.SIX && NAME_PROCESS.SIX ||
+                                            dataUser.currentPosition == STATUS_PROCESS.SEVEN && NAME_PROCESS.SEVEN
+                                        }
+
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
                                     <InputPositionSelecter
                                         label={"Chức vụ mới"}
                                         value={dataProces.newPosition}
@@ -130,7 +150,7 @@ const ModalProcess = () => {
 
                                     />
                                 </Grid>
-                                <Grid item xs={6}>
+                                <Grid item xs={4}>
                                     <Input
                                         label={"Ngày hiệu lực"}
                                         type={"date"}
@@ -139,6 +159,7 @@ const ModalProcess = () => {
                                         Validate={validate.promotionDay}
                                         ErrorEmpty={ERROR_STATUS_EMPTY.TWENTYFIVE}
                                         ErrorSyntax={ERROR_STATUS_SYNTAX.TWENTYFIVE}
+
                                     />
                                 </Grid>
                             </Grid>
@@ -160,8 +181,56 @@ const ModalProcess = () => {
                             />
                         </div>
                     </>
+                    :
+                    <>
+                        <Grid item lg={24} sm={24}  >
+                            <Grid container item spacing={2}>
+                                <Grid item xs={4}>
+                                    <Input
+                                        label={"Chức vụ cũ"}
+                                        disabled
+                                        value={
+                                            dataUser.currentPosition == STATUS_PROCESS.ONE && NAME_PROCESS.ONE ||
+                                            dataUser.currentPosition == STATUS_PROCESS.TWO && NAME_PROCESS.TWO ||
+                                            dataUser.currentPosition == STATUS_PROCESS.THREE && NAME_PROCESS.THREE ||
+                                            dataUser.currentPosition == STATUS_PROCESS.FOUR && NAME_PROCESS.FOUR ||
+                                            dataUser.currentPosition == STATUS_PROCESS.FIVE && NAME_PROCESS.FIVE ||
+                                            dataUser.currentPosition == STATUS_PROCESS.SIX && NAME_PROCESS.SIX ||
+                                            dataUser.currentPosition == STATUS_PROCESS.SEVEN && NAME_PROCESS.SEVEN
+                                        }
+                                        valueDisable={true}
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <InputPositionSelecter
+                                        label={"Chức vụ mới"}
+                                        value={dataProces.newPosition}
+                                        FuntionOnchange={(event) => validateInputProcess("newPosition", event.target.value, dataProces, setDataProces, validate, setValidate)}
+                                        Validate={validate.newPosition}
+                                        ErrorEmpty={ERROR_STATUS_EMPTY.TWENTYFOUR}
+                                        valueDiable={true}
+
+                                    />
+                                </Grid>
+                                <Grid item xs={4}>
+                                    <Input
+                                        label={"Ngày hiệu lực"}
+                                        type={"date"}
+                                        value={dataProces.promotionDay}
+                                        FuntionOnchange={(event) => validateInputProcess("promotionDay", event.target.value, dataProces, setDataProces, validate, setValidate)}
+                                        Validate={validate.promotionDay}
+                                        ErrorEmpty={ERROR_STATUS_EMPTY.TWENTYFIVE}
+                                        ErrorSyntax={ERROR_STATUS_SYNTAX.TWENTYFIVE}
+                                        valueDisable={true}
+
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </>
                 }
                 <div>
+                    <br />
                     <TableProcess
                         data={data}
                         dataUser={dataUser}

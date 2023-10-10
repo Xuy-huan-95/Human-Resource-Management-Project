@@ -18,6 +18,13 @@ export const validateUseRelative = (initRelativeInfo, fammilyData, validateFammi
         })
         return false
     }
+    if (fammilyData["name"].length > 50) {
+        setValidateFammilyData({
+            ...validateFammilyData, name: ERROR_CODE.EMPTY
+        })
+        return false
+    }
+
     if (!fammilyData["dateOfBirth"]) {
         setValidateFammilyData({
             ...validateFammilyData, dateOfBirth: ERROR_CODE.EMPTY
@@ -43,7 +50,12 @@ export const validateUseRelative = (initRelativeInfo, fammilyData, validateFammi
         })
         return false
     }
-
+    if (fammilyData["email"] > 255) {
+        setValidateFammilyData({
+            ...validateFammilyData, email: ERROR_CODE.EMPTY
+        })
+        return false
+    }
     if (!fammilyData["phoneNumber"]) {
         setValidateFammilyData({
             ...validateFammilyData, phoneNumber: ERROR_CODE.EMPTY
@@ -59,6 +71,12 @@ export const validateUseRelative = (initRelativeInfo, fammilyData, validateFammi
     }
 
     if (!fammilyData["address"]) {
+        setValidateFammilyData({
+            ...validateFammilyData, address: ERROR_CODE.EMPTY
+        })
+        return false
+    }
+    if (fammilyData["address"].length > 255) {
         setValidateFammilyData({
             ...validateFammilyData, address: ERROR_CODE.EMPTY
         })
@@ -105,6 +123,7 @@ export const handleOnChangeInputUserRelative = (name: string, value: any, fammil
         if (value && /^([^0-9]*)$/.test(value)) setValidateFammilyData({ ...validateFammilyData, name: "" })
         if (value && !/^([^0-9]*)$/.test(value)) setValidateFammilyData({ ...validateFammilyData, name: ERROR_CODE.SYNTAX })
         if (!value) setValidateFammilyData({ ...validateFammilyData, name: "" })
+        if (value.length > 50) setValidateFammilyData({ ...validateFammilyData, name: ERROR_CODE.EMPTY })
     }
     if (name == "dateOfBirth") {
         setFammilyData({ ...fammilyData, dateOfBirth: value })
@@ -144,6 +163,7 @@ export const handleOnChangeInputUserRelative = (name: string, value: any, fammil
         setFammilyData({ ...fammilyData, address: value })
         if (value) setValidateFammilyData({ ...validateFammilyData, address: "" })
         if (!value) setValidateFammilyData({ ...validateFammilyData, address: "" })
+        if (value.length > 255) setValidateFammilyData({ ...validateFammilyData, address: ERROR_CODE.EMPTY })
     }
 
 }

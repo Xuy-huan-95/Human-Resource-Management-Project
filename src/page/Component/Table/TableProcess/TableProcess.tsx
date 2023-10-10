@@ -65,7 +65,16 @@ const TableProcess = (props: ITableProcess) => {
                                 >
                                     Ghi chú
                                 </TableCell>
-
+                                <TableCell
+                                    align="center"
+                                >
+                                    Lý do từ chối
+                                </TableCell>
+                                <TableCell
+                                    align="center"
+                                >
+                                    Lý do ycbs
+                                </TableCell>
                                 <TableCell
                                     align="center"
                                 >
@@ -111,6 +120,12 @@ const TableProcess = (props: ITableProcess) => {
                                                 {item.newPosition == STATUS_PROCESS.SEVEN && NAME_PROCESS.SEVEN}                                               </TableCell>
                                             <TableCell >
                                                 {item.note}
+                                            </TableCell>
+                                            <TableCell >
+                                                {item?.reasonForRefusal}
+                                            </TableCell>
+                                            <TableCell >
+                                                {item.additionalRequest}
                                             </TableCell>
                                             <TableCell align="center" >
                                                 {moment(item.promotionDay).format("DD/MM/YYYY")}
