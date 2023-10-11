@@ -123,6 +123,23 @@ const Login = () => {
             </Box>
           </div>
           {/* </Box> */}
+          <div className="mt">
+            Thông tin tài khoản
+            <br />
+
+            <div>Tài khoản người dùng : <b>User</b> - <span>Mật khẩu :</span> <b>admin</b></div>
+            <br />
+            <div>Tài khoản lãnh đạo 1 : <b>Manage</b> - <span>Mật khẩu :</span> <b>admin</b></div>
+            <br />
+            <div>Tài khoản lãnh đạo 2 : <b>Manage2</b> - <span>Mật khẩu :</span> <b>admin</b></div>
+            <br />
+            <div>Tài khoản lãnh đạo 3 : <b>Manage3</b> - <span>Mật khẩu :</span> <b>admin</b></div>
+            <br />
+            <div>Tài khoản lãnh đạo 4 : <b>Manage4</b> - <span>Mật khẩu :</span> <b>admin</b></div>
+            <br />
+            <div>Tài khoản lãnh đạo 5 : <b>Manage5</b> - <span>Mật khẩu :</span> <b>admin</b></div>
+
+          </div>
         </Container>
       </ThemeProvider>
     </div>
